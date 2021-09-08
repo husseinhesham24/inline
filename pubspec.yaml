@@ -62,7 +62,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
@@ -73,6 +73,28 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+    - family: Roboto
+      fonts:
+         - asset: assets/fonts/roboto/Roboto-Black.ttf
+         - asset: assets/fonts/roboto/Roboto-BlackItalic.ttf
+         - asset: assets/fonts/roboto/Roboto-Bold.ttf
+         - asset: assets/fonts/roboto/Roboto-BoldItalic.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-Bold.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-BoldItalic.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-Italic.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-Light.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-LightItalic.ttf
+         - asset: assets/fonts/roboto/RobotoCondensed-Regular.ttf
+         - asset: assets/fonts/roboto/Roboto-Italic.ttf
+         - asset: assets/fonts/roboto/Roboto-Light.ttf
+         - asset: assets/fonts/roboto/Roboto-LightItalic.ttf
+         - asset: assets/fonts/roboto/Roboto-Medium.ttf
+         - asset: assets/fonts/roboto/Roboto-MediumItalic.ttf
+         - asset: assets/fonts/roboto/Roboto-Regular.ttf
+         - asset: assets/fonts/roboto/Roboto-Thin.ttf
+         - asset: assets/fonts/roboto/Roboto-ThinItalic.ttf
+         
+           weight: 700
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

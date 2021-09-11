@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inline/screens/signing_screen.dart';
+import '../screens/signing_screen.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/input_widget.dart';
 
 class Login_Screen extends StatefulWidget {
-  const Login_Screen({Key? key}) : super(key: key);
 
   @override
   _Login_ScreenState createState() => _Login_ScreenState();

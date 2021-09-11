@@ -1,13 +1,20 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import '../widgets/button_widget.dart';
+import './Signing_Screen.dart';
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+class MyHomePage extends StatelessWidget {
+  void navToSigningPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Signing_Screen();
+        },
+      ),
+    );
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -31,19 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 320,
                     ),
                     // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        "GET START",
-                        // ignore: deprecated_member_use
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(78),
-                      ),
-                      color: Color(0xffC4C4C4),
-                      minWidth: 185,
-                    )
+                    Button_Widget("GET START", navToSigningPage),
                   ],
                 ),
               ),

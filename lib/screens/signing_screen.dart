@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
+import './login_screen.dart';
+import './register_screen.dart';
 
-class signing_screen extends StatelessWidget {
+void navToLoginPage(BuildContext ctx) {
+  Navigator.of(ctx).push(
+    MaterialPageRoute(
+      builder: (_) {
+        return Login_Screen();
+      },
+    ),
+  );
+}
+
+void navToRegPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Register_Screen();
+        },
+      ),
+    );
+  }
+
+class Signing_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -25,7 +47,7 @@ class signing_screen extends StatelessWidget {
                     ),
                     // ignore: deprecated_member_use
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: () => navToLoginPage(context),
                       child: Text(
                         "LOGIN",
                         // ignore: deprecated_member_use
@@ -40,7 +62,7 @@ class signing_screen extends StatelessWidget {
 
                     // ignore: deprecated_member_use
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: () => navToRegPage(context),
                       child: Text(
                         "SIGNUP",
                         // ignore: deprecated_member_use

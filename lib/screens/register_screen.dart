@@ -28,47 +28,51 @@ class _Register_ScreenState extends State<Register_Screen> {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Scaffold(
-          body: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              //padding: EdgeInsets.only(bottom: 200),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Input_Widget("First Name"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("Last Name"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("Date of Birth"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("Mobile Number"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("E-mail"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("Password"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Input_Widget("Confirm Password"),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Button_Widget("Start", startAction),
-                ],
+          body: Stack(
+            children: [
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Button_Widget("Start", startAction),
               ),
-            ),
+              Container(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Input_Widget("First Name"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("Last Name"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("Date of Birth"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("Mobile Number"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("E-mail"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("Password"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Input_Widget("Confirm Password"),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           bottomNavigationBar: BottomAppBar(
             child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inline/screens/services_screen.dart';
+import '../screens/services_screen.dart';
+import '../widgets/paragraph_widget.dart';
 import '../screens/confirm_screen.dart';
 import '../widgets/button_widget.dart';
 
@@ -38,34 +39,7 @@ class Pay_Screen extends StatelessWidget {
                 child:
                     Button_Widget("Confirm your reservation", navToConfirmPage),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Your Service Costs:",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "5 points",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Paragraph_Widget("Your Services Costs:","5 Points"),
             ],
           ),
           bottomNavigationBar: BottomAppBar(

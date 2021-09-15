@@ -87,17 +87,19 @@ class _Login_ScreenState extends State<Login_Screen> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        onPressed: () => navToBack(context),
-                        icon: Icon(Icons.arrow_back_ios_sharp),
-                      ),
-                    ],
-                  )
                 ],
               ),
+            ),
+          ),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () => navToBack(context),
+                  icon: Icon(Icons.arrow_back_ios_sharp),
+                ),
+              ],
             ),
           ),
         );

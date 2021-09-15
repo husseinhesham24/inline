@@ -66,17 +66,19 @@ class _Register_ScreenState extends State<Register_Screen> {
                     height: 30,
                   ),
                   Button_Widget("Start", startAction),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        onPressed: () => navToBack(context),
-                        icon: Icon(Icons.arrow_back_ios_sharp),
-                      ),
-                    ],
-                  )
                 ],
               ),
+            ),
+          ),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () => navToBack(context),
+                  icon: Icon(Icons.arrow_back_ios_sharp),
+                ),
+              ],
             ),
           ),
         );

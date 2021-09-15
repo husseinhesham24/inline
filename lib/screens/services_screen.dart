@@ -51,6 +51,17 @@ class _Services_ScreenState extends State<Services_Screen> {
               ),
             ),
           ),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: null,
+                  icon: Icon(Icons.arrow_back_ios_sharp),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

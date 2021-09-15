@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/pay_screen.dart';
 import '../widgets/typeoflist_widget.dart';
 
 class ButtonList_Widget extends StatelessWidget {
@@ -14,13 +15,24 @@ class ButtonList_Widget extends StatelessWidget {
     return true;
   }
 
+  void navToPayPage(BuildContext ctx) {
+  Navigator.of(ctx).push(
+    MaterialPageRoute(
+      builder: (_) {
+        return Pay_Screen();
+      },
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     final pad = isImg(buttonImg) ? 60.0 : 0.0;
     return Container(
       margin: EdgeInsets.only(bottom: 20),
+      // ignore: deprecated_member_use
       child: FlatButton(
-        onPressed: null,
+        onPressed: ()=>navToPayPage(context),
         child: Container(
           padding: EdgeInsets.only(right: pad),
           width: 200,

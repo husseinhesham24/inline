@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import '../screens/services_screen.dart';
 import '../screens/signing_screen.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/input_widget.dart';
 
 class Login_Screen extends StatefulWidget {
-
   @override
   _Login_ScreenState createState() => _Login_ScreenState();
 }
 
 class _Login_ScreenState extends State<Login_Screen> {
+  void navToServicesPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Services_Screen();
+        },
+      ),
+    );
+  }
+
   void loginAction() {
     // check username and password from database but know let's move on
   }
@@ -60,7 +70,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                   SizedBox(
                     height: 30,
                   ),
-                  Button_Widget("LOGIN", loginAction),
+                  Button_Widget("LOGIN", navToServicesPage),
                   SizedBox(
                     height: 20,
                   ),

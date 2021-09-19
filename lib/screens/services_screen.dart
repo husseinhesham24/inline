@@ -13,11 +13,6 @@ class _Services_ScreenState extends State<Services_Screen> {
     {"title": "Vodafone", "image": "assets/images/ph2.png"},
     {"title": "orange", "image": "null"},
     {"title": "Etslate", "image": "null"},
-    {"title": "Etslate", "image": "null"},
-    {"title": "Etslate", "image": "null"},
-    {"title": "Etslate", "image": "null"},
-    {"title": "Etslate", "image": "null"},
-    {"title": "Etslate", "image": "null"},
   ];
 
   final String path = "assets/images/ph2.png";

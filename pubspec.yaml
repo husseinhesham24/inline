@@ -32,6 +32,7 @@ dependencies:
   flutter_native_splash: ^1.2.2
   permission_handler: ^8.1.6
   http: ^0.13.3
+  intl: ^0.17.0
   
 
 dev_dependencies:

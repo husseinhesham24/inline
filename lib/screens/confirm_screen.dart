@@ -71,11 +71,11 @@ class _Confirm_ScreenState extends State<Confirm_Screen> {
                       SizedBox(
                         height: 100,
                       ),
-                      Input_Widget("Mobile Numbers"),
+                      //Input_Widget("Mobile Numbers"),
                       SizedBox(
                         height: 25,
                       ),
-                      Input_Widget("Enter the code"),
+                      //Input_Widget("Enter the code"),
                     ],
                   ),
                 ),

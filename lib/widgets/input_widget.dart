@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class Input_Widget extends StatelessWidget {
   String inputName;
-  Input_Widget(this.inputName);
+  TextEditingController controller;
+  String errorText;
+  TextInputType inputType;
+
+  Input_Widget(this.inputName, this.controller, this.errorText, this.inputType);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,7 @@ class Input_Widget extends StatelessWidget {
               width: 185,
               height: 50,
               child: TextField(
+                controller: controller,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -34,7 +39,8 @@ class Input_Widget extends StatelessWidget {
                 decoration: InputDecoration(
                   fillColor: Color(0xffEEEAEA),
                   filled: true,
-                  border: InputBorder.none,
+                  errorText: errorText == 'null' ? null : errorText,
+                  //border: InputBorder.none,
                 ),
               ),
             ),

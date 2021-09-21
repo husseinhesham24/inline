@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../screens/login_screen.dart';
 import '../widgets/input_widget.dart';
 import '../widgets/button_widget.dart';
 import '../screens/signing_screen.dart';
-import '../modules/errorRegResponse.dart';
 import 'package:http/http.dart' as http;
 
 dynamic data;
@@ -27,7 +27,7 @@ Future<void> createAlbum(String name, String email, String password,
     }),
   );
 
-  //print(response.body);
+  print(response.body);
 
   if (response.statusCode == 201) {
     // If the server did return a 201 CREATED response,
@@ -52,13 +52,20 @@ class _Register_ScreenState extends State<Register_Screen> {
   TextEditingController _dateOfBirth = TextEditingController();
   dynamic _data = null;
 
-  final _formKey = GlobalKey<FormState>();
-
   void _startAction(BuildContext ctx) {
     createAlbum(_name.text, _email.text, _password.text,
         _passwordConfirmation.text, _phoneNumber.text, _dateOfBirth.text);
     setState(() {
       _data = data;
+      if (_data['status']) {
+        Navigator.of(ctx).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return Login_Screen();
+            },
+          ),
+        );
+      }
     });
   }
 
@@ -74,30 +81,27 @@ class _Register_ScreenState extends State<Register_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          body: SingleChildScrollView(
-            //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            padding: EdgeInsets.only(top: 80),
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(8.0),
-              child: buildStack(),
-            ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: EdgeInsets.only(top: 80),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(8.0),
+            child: buildStack(),
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () => _navToBack(context),
-                  icon: Icon(Icons.arrow_back_ios_sharp),
-                ),
-              ],
-            ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () => _navToBack(context),
+                icon: Icon(Icons.arrow_back_ios_sharp),
+              ),
+            ],
           ),
         ),
       ),
@@ -112,56 +116,84 @@ class _Register_ScreenState extends State<Register_Screen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Input_Widget(
-                "Name",
-                _name,
-                (_data == null || _data['status'])
-                    ? "null"
-                    : _data['errors']['name'][0],
-                TextInputType.text),
+              "Name",
+              _name,
+              (_data == null || _data['status'])
+                  ? null
+                  : _data?['errors']?['name']?[0],
+              TextInputType.text,
+              "john doe",
+              false,
+              false,
+            ),
             SizedBox(
               height: 30,
             ),
             Input_Widget(
-                "Date of Birth",
-                _dateOfBirth,
-                (_data == null || _data['status'])
-                    ? "null"
-                    : _data['errors']['date_of_birth'][0],
-                TextInputType.datetime),
+              "Date of Birth",
+              _dateOfBirth,
+              (_data == null || _data['status'])
+                  ? null
+                  : _data?['errors']?['date_of_birth']?[0],
+              TextInputType.datetime,
+              "9999-09-09",
+              false,
+              false,
+            ),
             SizedBox(
               height: 30,
             ),
             Input_Widget(
-                "Mobile Number",
-                _phoneNumber,
-                (_data == null || _data['status'])
-                    ? "null"
-                    : _data['errors']['phone_number'][0],
-                TextInputType.phone),
+              "Mobile Number",
+              _phoneNumber,
+              (_data == null || _data['status'])
+                  ? null
+                  : _data?['errors']?['phone_number']?[0],
+              TextInputType.phone,
+              "123456789",
+              false,
+              false,
+            ),
             SizedBox(
               height: 30,
             ),
             Input_Widget(
-                "E-mail",
-                _email,
-                (_data == null || _data['status'])
-                    ? "null"
-                    : _data['errors']['email'][0],
-                TextInputType.emailAddress),
-            SizedBox(
-              height: 30,
+              "E-mail",
+              _email,
+              (_data == null || _data['status'])
+                  ? null
+                  : _data?['errors']?['email']?[0],
+              TextInputType.emailAddress,
+              "john@doe.com",
+              false,
+              false,
             ),
-            Input_Widget("Password", _password, "null", TextInputType.text),
             SizedBox(
               height: 30,
             ),
             Input_Widget(
-                "Confirm Password",
-                _passwordConfirmation,
-                (_data == null || _data['status'])
-                    ? "null"
-                    : _data['errors']['password'][0],
-                TextInputType.text),
+              "Password",
+              _password,
+              null,
+              TextInputType.text,
+              null,
+              true,
+              true,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Input_Widget(
+              "Confirm Password",
+              _passwordConfirmation,
+              (_data == null || _data['status'])
+                  ? null
+                  : _data?['errors']?['password']?[0],
+              TextInputType.text,
+              null,
+              true,
+              true,
+            ),
             SizedBox(
               height: 100,
             ),

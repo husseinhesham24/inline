@@ -8,103 +8,77 @@ import '../widgets/icon_widget.dart';
 import '../widgets/input_widget.dart';
 import 'package:http/http.dart' as http;
 
-Future<Album> createAlbum(String username, String password) async {
-  final response = await http.post(
-    Uri.parse('https://inline.mrtechnawy.com/api/auth/login'),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: jsonEncode(<String, String>{
-      'username': username,
-      'password': password,
-    }),
-  );
-
-  print(response.body);
-
-  if (response.statusCode == 201) {
-    return Album.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to create album.');
-  }
-}
-
-class Album {
-  final int id;
-  final String name;
-  final String email;
-  final String phoneNumber;
-  final String dateOfBirth;
-
-  Album({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phoneNumber,
-    required this.dateOfBirth,
-  });
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['user']['id'],
-      name: json['user']['name'].toString(),
-      email: json['user']['email'].toString(),
-      phoneNumber: json['user']['phone_number'].toString(),
-      dateOfBirth: json['user']['date_of_birth'].toString(),
-    );
-  }
-}
-
 class Login_Screen extends StatefulWidget {
   @override
   _Login_ScreenState createState() => _Login_ScreenState();
 }
 
-
-
 class _Login_ScreenState extends State<Login_Screen> {
-  TextEditingController _namename = TextEditingController();
+  TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
-  Future<Album>? _futureAlbum;
+  dynamic _data;
 
-  FutureBuilder<Album> buildFutureBuilder() {
-    return FutureBuilder<Album>(
-      future: _futureAlbum,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Column(
-              children: [
-                Text(snapshot.data!.name),
-                SizedBox(height: 20),
-                Text(snapshot.data!.email),
-                SizedBox(height: 20),
-                Text(snapshot.data!.phoneNumber),
-                SizedBox(height: 20),
-                Text(snapshot.data!.dateOfBirth),
-                SizedBox(height: 20),
-              ],
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return const CircularProgressIndicator();
+  Future<void> _createAlbum(
+    String username,
+    String password,
+    BuildContext ctx,
+  ) async {
+    final response = await http.post(
+      Uri.parse('https://inline.mrtechnawy.com/api/auth/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    //print(response.body);
+
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      _data = jsonDecode(response.body);
+    } else {
+      _data = jsonDecode(response.body);
+    }
+
+    _verfyLogin(ctx);
+  }
+
+  void _sendRequest(BuildContext ctx) {
+    _createAlbum(
+      _username.text,
+      _password.text,
+      ctx,
     );
   }
 
   void _verfyLogin(BuildContext ctx) {
-    setState(() {
-      _futureAlbum = createAlbum(_namename.text, _password.text);
-    });
-  }
+    // print(_data);
+    // print("lol");
+    // print(_data['status']);
+    if (_data['status']) {
+      Navigator.of(ctx).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return Services_Screen();
+          },
+        ),
+      );
+    } else {
+      final snackBar = SnackBar(
+        content: const Text('Sorry, we could not find your account.'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {},
+        ),
+      );
 
-  void loginAction() {
-    // check username and password from database but know let's move on
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   void googleAuth() {
@@ -144,91 +118,31 @@ class _Login_ScreenState extends State<Login_Screen> {
                     height: 320,
                     width: 320,
                   ),
-                  //Input_Widget("User name"),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 100,
-                            child: Text(
-                              "Username",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 185,
-                            height: 50,
-                            child: TextField(
-                              controller: _namename,
-                              keyboardType: TextInputType.text,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff000000),
-                              ),
-                              decoration: InputDecoration(
-                                fillColor: Color(0xffEEEAEA),
-                                filled: true,
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  Input_Widget(
+                    "Username",
+                    _username,
+                    null,
+                    TextInputType.text,
+                    null,
+                    false,
+                    false,
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                  //Input_Widget("Password"),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 100,
-                            child: Text(
-                              "Password",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 185,
-                            height: 50,
-                            child: TextField(
-                              controller: _password,
-                              keyboardType: TextInputType.text,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff000000),
-                              ),
-                              decoration: InputDecoration(
-                                fillColor: Color(0xffEEEAEA),
-                                filled: true,
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  Input_Widget(
+                    "Password",
+                    _password,
+                    null,
+                    TextInputType.text,
+                    null,
+                    true,
+                    true,
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                  Button_Widget("LOGIN", _verfyLogin),
+                  Button_Widget("LOGIN", _sendRequest),
                   SizedBox(
                     height: 20,
                   ),
@@ -264,8 +178,4 @@ class _Login_ScreenState extends State<Login_Screen> {
       },
     );
   }
-
 }
-
-
-

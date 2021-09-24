@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/images/logo.jpeg",
+                      "assets/images/logo.png",
                       height: 320,
                       width: 320,
                     ),

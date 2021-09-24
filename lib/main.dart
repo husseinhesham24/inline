@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         textTheme: ThemeData.light().textTheme.copyWith(
               // ignore: deprecated_member_use
-              title: TextStyle(
+              headline6: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff000000),

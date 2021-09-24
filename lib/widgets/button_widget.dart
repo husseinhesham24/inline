@@ -13,7 +13,7 @@ class Button_Widget extends StatelessWidget {
       child: Text(
         buttonName,
         // ignore: deprecated_member_use
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.headline6,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(78),

@@ -41,7 +41,7 @@ class Signing_Screen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/images/logo.jpeg",
+                      "assets/images/logo.png",
                       height: 320,
                       width: 320,
                     ),
@@ -51,7 +51,7 @@ class Signing_Screen extends StatelessWidget {
                       child: Text(
                         "LOGIN",
                         // ignore: deprecated_member_use
-                        style: Theme.of(context).textTheme.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(78),
@@ -66,7 +66,7 @@ class Signing_Screen extends StatelessWidget {
                       child: Text(
                         "SIGNUP",
                         // ignore: deprecated_member_use
-                        style: Theme.of(context).textTheme.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(78),

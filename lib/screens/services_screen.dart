@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inline/widgets/buttonList_widget.dart';
-import 'package:inline/widgets/typeoflist_widget.dart';
+import '../widgets/buttonList_widget.dart';
+import '../widgets/typeoflist_widget.dart';
 import '../widgets/appBar_widget.dart';
+import '../widgets/main_drawer_widget.dart';
 
 class Services_Screen extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _Services_ScreenState extends State<Services_Screen> {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Scaffold(
+          drawer: MainDrawer("Hussein Hesham", "husseinhesham24@gmail.com", "assets/images/logo.png"),
           appBar: appBar_Widget(),
           body: SingleChildScrollView(
             child: Center(

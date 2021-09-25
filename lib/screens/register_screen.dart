@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:inline/api/signup_api.dart';
 import '../screens/login_screen.dart';
 import '../widgets/input_widget.dart';
 import '../widgets/button_widget.dart';
@@ -23,71 +24,24 @@ class _Register_ScreenState extends State<Register_Screen> {
   TextEditingController _dateOfBirth = TextEditingController();
   dynamic _data = null;
 
-  Future<void> createAlbum(
-    String name,
-    String email,
-    String password,
-    String passwordConfirmation,
-    String phoneNumber,
-    String dateOfBirth,
-    BuildContext ctx,
-  ) async {
-    final response = await http.post(
-      Uri.parse('https://inline.mrtechnawy.com/api/auth/register'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'name': name,
-        'email': email,
-        'password': password,
-        'password_confirmation': passwordConfirmation,
-        'phone_number': phoneNumber,
-        'date_of_birth': dateOfBirth,
-      }),
-    );
-
-    print(response.body);
-
-    if (response.statusCode == 201) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      data = jsonDecode(response.body);
-    } else {
-      data = jsonDecode(response.body);
-    }
-
-    _verfyReg(ctx);
-  }
-
   void _sendRequest(BuildContext ctx) {
-    createAlbum(
+    SignUpApi.signup(
       _name.text,
       _email.text,
       _password.text,
       _passwordConfirmation.text,
       _phoneNumber.text,
       _dateOfBirth.text,
+      _getData,
       ctx,
     );
   }
 
-  void _verfyReg(BuildContext ctx) {
-    print(_data);
-    print("lol");
+  void _getData(dynamic data) {
+    print("7mo");
+    print(data);
     setState(() {
       _data = data;
-      print(_data['status']);
-      if (_data['status']) {
-        Navigator.of(ctx).push(
-          MaterialPageRoute(
-            builder: (_) {
-              return Login_Screen();
-            },
-          ),
-        );
-      }
     });
   }
 

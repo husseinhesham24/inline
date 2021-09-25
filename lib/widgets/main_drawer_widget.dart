@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../api/google_signin_api.dart';
 import '../screens/login_screen.dart';
 import '../modules/user.dart';
 import '../widgets/draweritem_widget.dart';
@@ -34,6 +35,10 @@ class MainDrawer extends StatelessWidget {
     }
 
     // if conds of google & facebook
+    if(userData.isGoogle)
+    {
+      await GoogleSignInApi.logout();
+    }
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return Login_Screen();
     }));
@@ -47,9 +52,7 @@ class MainDrawer extends StatelessWidget {
           Drawer_Header(
             userData.name,
             userData.email,
-            userData.photo == null
-                ? "assets/images/unknown.png"
-                : userData.photo,
+            userData.photo,
           ),
           SizedBox(
             height: 20,

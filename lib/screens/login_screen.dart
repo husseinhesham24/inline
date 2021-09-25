@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:inline/modules/user.dart';
+import '../api/google_signin_api.dart';
+import '../modules/user.dart';
 import '../screens/services_screen.dart';
 import '../screens/signing_screen.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/input_widget.dart';
+import '../api/login_api.dart';
 import 'package:http/http.dart' as http;
 
 class Login_Screen extends StatefulWidget {
@@ -17,82 +19,40 @@ class Login_Screen extends StatefulWidget {
 class _Login_ScreenState extends State<Login_Screen> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
-  dynamic _data;
 
-  Future<void> _createAlbum(
-    String username,
-    String password,
-    BuildContext ctx,
-  ) async {
-    final response = await http.post(
-      Uri.parse('https://inline.mrtechnawy.com/api/auth/login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
-      }),
-    );
-
-    //print(response.body);
-
-    if (response.statusCode == 200) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      _data = jsonDecode(response.body);
-    } else {
-      _data = jsonDecode(response.body);
-    }
-
-    _verfyLogin(ctx);
-  }
-
-  void _sendRequest(BuildContext ctx) {
-    _createAlbum(
+  void inlineAuth(BuildContext ctx) {
+    LoginApi.login(
       _username.text,
       _password.text,
-      ctx,
+      context,
     );
   }
 
-  void _verfyLogin(BuildContext ctx) {
-    // print(_data);
-    // print("lol");
-    // print(_data?['user']?['photo']);
-    if (_data['status']) {
-      Navigator.of(ctx).push(
-        MaterialPageRoute(
-          builder: (_) {
-            final userData = new User(
-              _data['user']['name'],
-              _data['user']['email'],
-              _data['user']['phone_number'],
-              null,
-              _data['access_token'],
-              false,
-              false,
-            );
-            return Services_Screen(userData);
-          },
+  Future googleAuth() async {
+    final user = await GoogleSignInApi.login();
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Sign in field',
+          ),
         ),
       );
     } else {
-      final snackBar = SnackBar(
-        content: const Text('Sorry, we could not find your account.'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {},
-        ),
+      final User userData = new User(
+        user.displayName!,
+        user.email,
+        "phone_number",
+        user.photoUrl!,
+        "acess_token",
+        true,
+        false,
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => Services_Screen(userData)));
     }
-  }
-
-  void googleAuth() {
-    // check username and password from google auth but know let's move on
   }
 
   void facbookAuth() {
@@ -152,7 +112,10 @@ class _Login_ScreenState extends State<Login_Screen> {
                   SizedBox(
                     height: 30,
                   ),
-                  Button_Widget("LOGIN", _sendRequest),
+                  Button_Widget(
+                    "LOGIN",
+                    inlineAuth,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -161,11 +124,11 @@ class _Login_ScreenState extends State<Login_Screen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon_Widget("assets/images/photo6.png", googleAuth),
+                        Icon_Widget("assets/images/photo6.png", facbookAuth),
                         SizedBox(
                           width: 30,
                         ),
-                        Icon_Widget("assets/images/photo10.png", facbookAuth),
+                        Icon_Widget("assets/images/photo10.png", googleAuth),
                       ],
                     ),
                   ),

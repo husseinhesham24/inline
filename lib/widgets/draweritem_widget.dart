@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class DrawerItem extends StatelessWidget {
   final dynamic icon;
   final String iconName;
+  final Function? iconFunction;
 
-  DrawerItem(this.iconName, this.icon);
+  DrawerItem(this.iconName, this.icon, this.iconFunction);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,9 @@ class DrawerItem extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        iconFunction!(context);
+      },
     );
   }
 }

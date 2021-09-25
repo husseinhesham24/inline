@@ -5,6 +5,9 @@ import '../widgets/appBar_widget.dart';
 import '../widgets/main_drawer_widget.dart';
 
 class Services_Screen extends StatefulWidget {
+  final userData;
+  Services_Screen(this.userData);
+
   @override
   _Services_ScreenState createState() => _Services_ScreenState();
 }
@@ -23,7 +26,7 @@ class _Services_ScreenState extends State<Services_Screen> {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Scaffold(
-          drawer: MainDrawer("Hussein Hesham", "husseinhesham24@gmail.com", "assets/images/logo.png"),
+          drawer: MainDrawer(widget.userData),
           appBar: appBar_Widget(),
           body: SingleChildScrollView(
             child: Center(

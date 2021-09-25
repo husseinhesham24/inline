@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inline/modules/user.dart';
 import '../screens/services_screen.dart';
 import '../screens/signing_screen.dart';
 import '../widgets/button_widget.dart';
@@ -59,12 +60,21 @@ class _Login_ScreenState extends State<Login_Screen> {
   void _verfyLogin(BuildContext ctx) {
     // print(_data);
     // print("lol");
-    // print(_data['status']);
+    // print(_data?['user']?['photo']);
     if (_data['status']) {
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {
-            return Services_Screen();
+            final userData = new User(
+              _data['user']['name'],
+              _data['user']['email'],
+              _data['user']['phone_number'],
+              null,
+              _data['access_token'],
+              false,
+              false,
+            );
+            return Services_Screen(userData);
           },
         ),
       );

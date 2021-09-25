@@ -21,7 +21,7 @@ class Pay_Screen extends StatelessWidget {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Services_Screen();
+          return Services_Screen(null);
         },
       ),
     );

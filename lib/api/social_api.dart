@@ -1,36 +1,27 @@
 import 'dart:convert';
-import 'dart:async';
 import 'package:flutter/material.dart';
-import '../screens/services_screen.dart';
+import 'package:inline/screens/socialReg_screen.dart';
 import '../modules/user.dart';
+import '../screens/services_screen.dart';
 import 'package:http/http.dart' as http;
 
-class SignUpApi {
-  static Future<void> signup(
-    String name,
+class SocialApi {
+  static Future<void> login(
+    String? name,
     String email,
-    String password,
-    String passwordConfirmation,
-    String phoneNumber,
-    String dateOfBirth,
-    Function getData,
+    String? photo,
     bool isGoogle,
     bool isFacebook,
     BuildContext ctx,
   ) async {
     final response = await http.post(
-      Uri.parse('https://inline.mrtechnawy.com/api/auth/register'),
+      Uri.parse('https://inline.mrtechnawy.com/api/auth/social'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'name': name,
         'email': email,
-        'password': password,
-        'password_confirmation': passwordConfirmation,
-        'phone_number': phoneNumber,
-        'date_of_birth': dateOfBirth,
       }),
     );
 
@@ -48,8 +39,7 @@ class SignUpApi {
 
     print(data);
     print("lol");
-
-    print(data['status']);
+    // print(_data?['user']?['photo']);
     if (data['status']) {
       Navigator.of(ctx).push(
         MaterialPageRoute(
@@ -58,18 +48,28 @@ class SignUpApi {
               data['user']['name'],
               data['user']['email'],
               data['user']['phone_number'],
-              "assets/images/unknown.png",
+              photo!,
               data['access_token'],
               isGoogle,
               isFacebook,
             );
-
             return Services_Screen(userData);
           },
         ),
       );
     } else {
-      getData(data);
+      Navigator.of(ctx).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return SocialReg_screen(
+              name!,
+              email,
+              isGoogle,
+              isFacebook,
+            );
+          },
+        ),
+      );
     }
   }
 }

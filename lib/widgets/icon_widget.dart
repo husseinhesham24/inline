@@ -11,7 +11,7 @@ class Icon_Widget extends StatelessWidget {
       scale: 1.2,
       child: IconButton(
         icon: Image.asset(iconPath),
-        onPressed: () => iconAuth(),
+        onPressed: () => iconAuth(context),
       ),
     );
   }

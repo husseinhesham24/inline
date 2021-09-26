@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import '../modules/user.dart';
 
 class Drawer_Header extends StatelessWidget {
-  final String? userName;
-  final String? userEmail;
-  final dynamic userPhoto;
+  final User userData;
 
-  Drawer_Header(this.userName, this.userEmail, this.userPhoto);
+  Drawer_Header(this.userData);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +18,11 @@ class Drawer_Header extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundImage: AssetImage(
-              userPhoto,
-            ),
+            backgroundImage: (userData.isGoogle || userData.isFacebook)
+                ? NetworkImage(userData.photo)
+                : AssetImage(
+                    "assets/images/unknown.png",
+                  ) as ImageProvider,
           ),
           SizedBox(
             width: 20,
@@ -35,7 +36,7 @@ class Drawer_Header extends StatelessWidget {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
-                      userName!,
+                      userData.name,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -53,7 +54,7 @@ class Drawer_Header extends StatelessWidget {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
-                      userEmail!,
+                      userData.email,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,

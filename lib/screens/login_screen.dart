@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inline/api/social_api.dart';
 import '../api/google_signin_api.dart';
 import '../modules/user.dart';
 import '../screens/services_screen.dart';
@@ -28,7 +29,7 @@ class _Login_ScreenState extends State<Login_Screen> {
     );
   }
 
-  Future googleAuth() async {
+  Future googleAuth(BuildContext ctx) async {
     final user = await GoogleSignInApi.login();
 
     if (user == null) {
@@ -40,18 +41,14 @@ class _Login_ScreenState extends State<Login_Screen> {
         ),
       );
     } else {
-      final User userData = new User(
-        user.displayName!,
+      SocialApi.login(
+        user.displayName,
         user.email,
-        "phone_number",
-        user.photoUrl!,
-        "acess_token",
+        user.photoUrl,
         true,
         false,
+        ctx,
       );
-
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Services_Screen(userData)));
     }
   }
 

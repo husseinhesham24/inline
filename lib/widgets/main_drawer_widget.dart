@@ -35,8 +35,7 @@ class MainDrawer extends StatelessWidget {
     }
 
     // if conds of google & facebook
-    if(userData.isGoogle)
-    {
+    if (userData.isGoogle) {
       await GoogleSignInApi.logout();
     }
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -50,9 +49,7 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           Drawer_Header(
-            userData.name,
-            userData.email,
-            userData.photo,
+            userData,
           ),
           SizedBox(
             height: 20,

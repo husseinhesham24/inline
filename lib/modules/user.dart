@@ -2,10 +2,10 @@ class User {
   final String name;
   final String email;
   final String phone;
-  final String? photo;
+  final String photo;
   final String token;
   final bool isGoogle;
-  final bool isfacebook;
+  final bool isFacebook;
 
   User(
     this.name,
@@ -14,6 +14,6 @@ class User {
     this.photo,
     this.token,
     this.isGoogle,
-    this.isfacebook,
+    this.isFacebook,
   );
 }

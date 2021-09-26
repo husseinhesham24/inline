@@ -1,36 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:inline/api/signup_api.dart';
+import '../api/signup_api.dart';
+import 'package:random_password_generator/random_password_generator.dart';
+import '../screens/login_screen.dart';
 import '../widgets/input_widget.dart';
 import '../widgets/button_widget.dart';
-import '../screens/signing_screen.dart';
 
 dynamic data;
 
-class Register_Screen extends StatefulWidget {
+class SocialReg_screen extends StatefulWidget {
+  final String name;
+  final String email;
+  final bool isGoogle;
+  final bool isFacebook;
+
+  SocialReg_screen(
+    this.name,
+    this.email,
+    this.isGoogle,
+    this.isFacebook,
+  );
+
   @override
-  _Register_ScreenState createState() => _Register_ScreenState();
+  _SocialReg_screenState createState() => _SocialReg_screenState();
 }
 
-class _Register_ScreenState extends State<Register_Screen> {
+class _SocialReg_screenState extends State<SocialReg_screen> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _passwordConfirmation = TextEditingController();
+  final password = RandomPasswordGenerator();
   TextEditingController _phoneNumber = TextEditingController();
   TextEditingController _dateOfBirth = TextEditingController();
   dynamic _data = null;
 
   void _sendRequest(BuildContext ctx) {
+    String randPassword = password.randomPassword(
+      letters: true,
+      uppercase: true,
+      numbers: true,
+      specialChar: true,
+      passwordLength: 100,
+    );
+
+    String randConPassword = randPassword;
+
+    print("pass");
+    print(randPassword);
     SignUpApi.signup(
-      _name.text,
-      _email.text,
-      _password.text,
-      _passwordConfirmation.text,
+      widget.name,
+      widget.email,
+      randPassword,
+      randConPassword,
       _phoneNumber.text,
       _dateOfBirth.text,
       _getData,
-      false, 
-      false,
+      widget.isGoogle,
+      widget.isFacebook,
       ctx,
     );
   }
@@ -47,7 +71,7 @@ class _Register_ScreenState extends State<Register_Screen> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Signing_Screen();
+          return Login_Screen();
         },
       ),
     );
@@ -90,13 +114,13 @@ class _Register_ScreenState extends State<Register_Screen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Input_Widget(
-              "Name",
-              _name,
+              "Mobile Number",
+              _phoneNumber,
               (_data == null || _data['status'])
                   ? null
-                  : _data?['errors']?['name']?[0],
-              TextInputType.text,
-              "john doe",
+                  : _data?['errors']?['phone_number']?[0],
+              TextInputType.phone,
+              "123456789",
               false,
               false,
             ),
@@ -113,60 +137,6 @@ class _Register_ScreenState extends State<Register_Screen> {
               "9999-09-09",
               false,
               false,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Input_Widget(
-              "Mobile Number",
-              _phoneNumber,
-              (_data == null || _data['status'])
-                  ? null
-                  : _data?['errors']?['phone_number']?[0],
-              TextInputType.phone,
-              "123456789",
-              false,
-              false,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Input_Widget(
-              "E-mail",
-              _email,
-              (_data == null || _data['status'])
-                  ? null
-                  : _data?['errors']?['email']?[0],
-              TextInputType.emailAddress,
-              "john@doe.com",
-              false,
-              false,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Input_Widget(
-              "Password",
-              _password,
-              null,
-              TextInputType.text,
-              null,
-              true,
-              true,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Input_Widget(
-              "Confirm Password",
-              _passwordConfirmation,
-              (_data == null || _data['status'])
-                  ? null
-                  : _data?['errors']?['password']?[0],
-              TextInputType.text,
-              null,
-              true,
-              true,
             ),
             SizedBox(
               height: 100,

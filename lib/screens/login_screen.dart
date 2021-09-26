@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inline/api/social_api.dart';
 import '../api/google_signin_api.dart';
 import '../modules/user.dart';
@@ -30,25 +32,19 @@ class _Login_ScreenState extends State<Login_Screen> {
   }
 
   Future googleAuth(BuildContext ctx) async {
-    final user = await GoogleSignInApi.login();
-
-    if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Sign in field',
-          ),
-        ),
-      );
-    } else {
+    try {
+      final user = await GoogleSignInApi.login();
       SocialApi.login(
-        user.displayName,
+        user!.displayName,
         user.email,
         user.photoUrl,
         true,
         false,
         ctx,
       );
+    }
+    catch (e) {
+      print("throw google sgin in $e");
     }
   }
 

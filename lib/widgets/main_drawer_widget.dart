@@ -24,6 +24,7 @@ class MainDrawer extends StatelessWidget {
       },
     );
 
+    print("logout respone");
     print(response.body);
     final data;
     if (response.statusCode == 200) {

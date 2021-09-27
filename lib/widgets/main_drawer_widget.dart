@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../api/google_signin_api.dart';
 import '../screens/login_screen.dart';
 import '../modules/user.dart';
@@ -39,6 +40,11 @@ class MainDrawer extends StatelessWidget {
     if (userData.isGoogle) {
       await GoogleSignInApi.logout();
     }
+
+    if (userData.isFacebook) {
+      FacebookAuth.instance.logOut().then((value) => null);
+    }
+    
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return Login_Screen();
     }));

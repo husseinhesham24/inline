@@ -1,18 +1,13 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:inline/api/social_api.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import '../api/social_api.dart';
 import '../api/google_signin_api.dart';
-import '../modules/user.dart';
-import '../screens/services_screen.dart';
 import '../screens/signing_screen.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/input_widget.dart';
 import '../api/login_api.dart';
-import 'package:http/http.dart' as http;
 
 class Login_Screen extends StatefulWidget {
   @override
@@ -42,14 +37,25 @@ class _Login_ScreenState extends State<Login_Screen> {
         false,
         ctx,
       );
-    }
-    catch (e) {
+    } catch (e) {
       print("throw google sgin in $e");
     }
   }
 
-  void facbookAuth() {
-    // check username and password from facebook auth but know let's move on
+  Future facbookAuth(BuildContext ctx) async {
+    FacebookAuth.instance
+        .login(permissions: ["public_profile", "email"]).then((value) {
+      FacebookAuth.instance.getUserData().then((user) {
+        SocialApi.login(
+          user["name"],
+          user["email"],
+          user["picture"]["data"]["url"],
+          false,
+          true,
+          ctx,
+        );
+      });
+    });
   }
 
   void navToBack(BuildContext ctx) {

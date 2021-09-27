@@ -22,6 +22,7 @@ class _Login_ScreenState extends State<Login_Screen> {
     LoginApi.login(
       _username.text,
       _password.text,
+      "assets/images/unknown.png",
       context,
     );
   }
@@ -32,7 +33,7 @@ class _Login_ScreenState extends State<Login_Screen> {
       SocialApi.login(
         user!.displayName,
         user.email,
-        user.photoUrl,
+        user.photoUrl??"assets/images/unknown.png",
         true,
         false,
         ctx,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../modules/user_shared_Preferences.dart';
 import '../screens/services_screen.dart';
 import '../modules/user.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +14,7 @@ class SignUpApi {
     String passwordConfirmation,
     String phoneNumber,
     String dateOfBirth,
+    String photo,
     Function getData,
     bool isGoogle,
     bool isFacebook,
@@ -51,6 +53,11 @@ class SignUpApi {
 
     print(data['status']);
     if (data['status']) {
+      await UserSharedPreferences.setString('token',data['access_token']);
+      await UserSharedPreferences.setString('photo',photo);
+      await UserSharedPreferences.setBool('isGoogle',isGoogle);
+      await UserSharedPreferences.setBool('isFacebook',isFacebook);
+      
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {
@@ -58,7 +65,7 @@ class SignUpApi {
               data['user']['name'],
               data['user']['email'],
               data['user']['phone_number'],
-              "assets/images/unknown.png",
+              photo,
               data['access_token'],
               isGoogle,
               isFacebook,

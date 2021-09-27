@@ -28,6 +28,7 @@ class _Register_ScreenState extends State<Register_Screen> {
       _passwordConfirmation.text,
       _phoneNumber.text,
       _dateOfBirth.text,
+      "assets/images/unknown.png",
       _getData,
       false, 
       false,

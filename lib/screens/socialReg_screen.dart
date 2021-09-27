@@ -10,12 +10,14 @@ dynamic data;
 class SocialReg_screen extends StatefulWidget {
   final String name;
   final String email;
+  final String photo;
   final bool isGoogle;
   final bool isFacebook;
 
   SocialReg_screen(
     this.name,
     this.email,
+    this.photo,
     this.isGoogle,
     this.isFacebook,
   );
@@ -52,6 +54,7 @@ class _SocialReg_screenState extends State<SocialReg_screen> {
       randConPassword,
       _phoneNumber.text,
       _dateOfBirth.text,
+      widget.photo,
       _getData,
       widget.isGoogle,
       widget.isFacebook,

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../modules/user_shared_Preferences.dart';
 import './screens/home.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserSharedPreferences.init();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -35,4 +41,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

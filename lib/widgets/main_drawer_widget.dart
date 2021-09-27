@@ -42,9 +42,9 @@ class MainDrawer extends StatelessWidget {
     }
 
     if (userData.isFacebook) {
-      FacebookAuth.instance.logOut().then((value) => null);
+      await FacebookAuth.instance.logOut();
     }
-    
+
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return Login_Screen();
     }));

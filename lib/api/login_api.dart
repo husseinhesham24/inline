@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../modules/user_shared_Preferences.dart';
 import '../modules/user.dart';
 import '../screens/services_screen.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ class LoginApi {
   static Future<void> login(
     String username,
     String password,
+    String photo,
     BuildContext ctx,
   ) async {
     final response = await http.post(
@@ -38,6 +40,10 @@ class LoginApi {
     // print("lol");
     // print(_data?['user']?['photo']);
     if (data['status']) {
+      await UserSharedPreferences.setString('token',data['access_token']);
+      await UserSharedPreferences.setString('photo',photo);
+      await UserSharedPreferences.setBool('isGoogle',false);
+      await UserSharedPreferences.setBool('isFacebook',false);
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {

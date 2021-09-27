@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:inline/screens/socialReg_screen.dart';
+import '../modules/user_shared_Preferences.dart';
+import '../screens/socialReg_screen.dart';
 import '../modules/user.dart';
 import '../screens/services_screen.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ class SocialApi {
   static Future<void> login(
     String? name,
     String email,
-    String? photo,
+    String photo,
     bool isGoogle,
     bool isFacebook,
     BuildContext ctx,
@@ -41,6 +42,10 @@ class SocialApi {
     print("lol");
     // print(_data?['user']?['photo']);
     if (data['status']) {
+      await UserSharedPreferences.setString('token',data['access_token']);
+      await UserSharedPreferences.setString('photo',photo);
+      await UserSharedPreferences.setBool('isGoogle',isGoogle);
+      await UserSharedPreferences.setBool('isFacebook',isFacebook);
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {
@@ -48,7 +53,7 @@ class SocialApi {
               data['user']['name'],
               data['user']['email'],
               data['user']['phone_number'],
-              photo!,
+              photo,
               data['access_token'],
               isGoogle,
               isFacebook,
@@ -64,6 +69,7 @@ class SocialApi {
             return SocialReg_screen(
               name!,
               email,
+              photo,
               isGoogle,
               isFacebook,
             );

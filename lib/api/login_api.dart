@@ -53,6 +53,7 @@ class LoginApi {
               data['user']['phone_number'],
               "assets/images/unknown.png",
               data['access_token'],
+              int.parse(data['user']['wallet']),
               false,
               false,
             );

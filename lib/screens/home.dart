@@ -51,6 +51,7 @@ class MyHomePage extends StatelessWidget {
               data['user']['phone_number'],
               photoUrl,
               token,
+              int.parse(data['user']['wallet']),
               isGoogle,
               isFacebook,
             );

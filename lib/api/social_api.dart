@@ -55,6 +55,7 @@ class SocialApi {
               data['user']['phone_number'],
               photo,
               data['access_token'],
+              int.parse(data['user']['wallet']),
               isGoogle,
               isFacebook,
             );

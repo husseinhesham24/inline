@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:inline/api/logout_api.dart';
 import '../api/google_signin_api.dart';
 import '../screens/login_screen.dart';
 import '../modules/user.dart';
@@ -15,39 +16,12 @@ class MainDrawer extends StatelessWidget {
 
   MainDrawer(this.userData);
 
-  Future<void> signOut(BuildContext ctx) async {
-    final response = await http.post(
-      Uri.parse('https://inline.mrtechnawy.com/api/auth/logout'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ${userData.token}',
-      },
+  void signOut(BuildContext ctx) {
+    LogoutApi.logout(
+      ctx,
+      userData,
+      "https://inline.mrtechnawy.com/api/auth/logout",
     );
-
-    print("logout respone");
-    print(response.body);
-    final data;
-    if (response.statusCode == 200) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      data = jsonDecode(response.body);
-    } else {
-      data = jsonDecode(response.body);
-    }
-
-    // if conds of google & facebook
-    if (userData.isGoogle) {
-      await GoogleSignInApi.logout();
-    }
-
-    if (userData.isFacebook) {
-      await FacebookAuth.instance.logOut();
-    }
-
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return Login_Screen();
-    }));
   }
 
   @override

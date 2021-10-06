@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
-  const appBar_Widget({Key? key}) : super(key: key);
+  
+  final Function filter;
 
+  appBar_Widget(this.filter);
+  
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
@@ -16,13 +19,14 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
               padding: EdgeInsets.only(left: 10),
               child: Builder(
                 builder: (context) => GestureDetector(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: Icon(
-                      Icons.menu,
-                      size: 30,
-                    )),
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: Icon(
+                    Icons.menu,
+                    size: 30,
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -32,6 +36,7 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
               height: 40,
               width: 250,
               child: TextField(
+                onChanged: (value) => filter(value),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

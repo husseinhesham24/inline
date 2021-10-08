@@ -42,14 +42,10 @@ class SocialApi {
     print("lol");
     // print(_data?['user']?['photo']);
     if (data['status']) {
-      await UserSharedPreferences.setString('token',data['access_token']);
-      await UserSharedPreferences.setString('photo',photo);
-      await UserSharedPreferences.setBool('isGoogle',isGoogle);
-      await UserSharedPreferences.setBool('isFacebook',isFacebook);
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {
-            final userData = new User(
+            final userObject = new User(
               data['user']['name'],
               data['user']['email'],
               data['user']['phone_number'],
@@ -59,7 +55,10 @@ class SocialApi {
               isGoogle,
               isFacebook,
             );
-            return Services_Screen(userData);
+
+            String UserData = jsonEncode(userObject);
+            UserSharedPreferences.setString('userData', UserData);
+            return Services_Screen();
           },
         ),
       );

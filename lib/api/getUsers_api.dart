@@ -1,29 +1,24 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:inline/screens/home.dart';
+import 'package:inline/modules/user_shared_Preferences.dart';
 import 'package:inline/screens/services_screen.dart';
 import 'package:inline/screens/signing_screen.dart';
 import '../modules/user.dart';
-import '../modules/user_shared_Preferences.dart';
-import '../widgets/button_widget.dart';
 import 'package:http/http.dart' as http;
 
-class GetUserApi {
+class GetUsersApi {
   static Future<void> checkUser(
-    String token,
-    String photoUrl,
-    bool isGoogle,
-    bool isFacebook,
     String endPoint,
     BuildContext ctx,
   ) async {
+    Map<String,dynamic> jsondatais = jsonDecode(UserSharedPreferences.getString('userData')!);
+    User userData = User.fromJson(jsondatais);
     final response = await http.get(
       Uri.parse(endPoint),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${token}',
+        'Authorization': 'Bearer ${userData.token}',
       },
     );
 
@@ -39,22 +34,15 @@ class GetUserApi {
     } else {
       data = jsonDecode(response.body);
     }
-
-    print(data);
-    print(photoUrl);
+    
     if (data['status']) {
-      final userData = new User(
-        data['user']['name'],
-        data['user']['email'],
-        data['user']['phone_number'],
-        photoUrl,
-        token,
-        int.parse(data['user']['wallet']),
-        isGoogle,
-        isFacebook,
-      );
-
-      MyHomePage.getUser(ctx, userData);
+       Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Services_Screen();
+        },
+      ),
+    );
     } else {
       Navigator.of(ctx).push(
         MaterialPageRoute(

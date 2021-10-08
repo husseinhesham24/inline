@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inline/api/getUser_api.dart';
+import '../api/getUsers_api.dart';
 import '../modules/user.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../widgets/button_widget.dart';
@@ -11,35 +11,19 @@ import 'package:http/http.dart' as http;
 import 'services_screen.dart';
 
 class MyHomePage extends StatelessWidget {
-  static void getUser(
-    BuildContext ctx,
-    dynamic userData,
-  ) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Services_Screen(userData);
-        },
-      ),
-    );
-  }
+  
 
   void navToSigningPage(BuildContext ctx) async {
-    final String? token = UserSharedPreferences.getString('token');
-    final String? photo = UserSharedPreferences.getString('photo');
-    final bool? isGoogle = UserSharedPreferences.getBool('isGoogle');
-    final bool? isFacebook = UserSharedPreferences.getBool('isFacebook');
-    print(token);
-    print(photo);
-    if (token != null) {
-      print("7mo");
-      GetUserApi.checkUser(
-          token,
-          photo ?? "assets/images/unknown.png",
-          isGoogle ?? false,
-          isFacebook ?? false,
-          "https://inline.mrtechnawy.com/api/auth/user-profile",
-          ctx);
+    String? response = UserSharedPreferences.getString('userData');
+
+    print("home SharedPreferences");
+    print(response);
+
+    if (response != null) {
+      GetUsersApi.checkUser(
+        "https://inline.mrtechnawy.com/api/auth/user-profile",
+        ctx,
+      );
     } else {
       Navigator.of(ctx).push(
         MaterialPageRoute(

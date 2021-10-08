@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import '../modules/user.dart';
 import '../screens/services_screen.dart';
 import '../widgets/paragraph_widget.dart';
 import '../screens/confirm_screen.dart';
 import '../widgets/button_widget.dart';
 
 class Pay_Screen extends StatelessWidget {
-  const Pay_Screen({Key? key}) : super(key: key);
-
+  
   void navToConfirmPage(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
@@ -21,7 +21,7 @@ class Pay_Screen extends StatelessWidget {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Services_Screen(null);
+          return Services_Screen();
         },
       ),
     );

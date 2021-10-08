@@ -18,4 +18,25 @@ class User {
     this.isGoogle,
     this.isFacebook,
   );
+
+  User.fromJson(Map<String, dynamic> json)
+      : name = json['name'] ?? "",
+        email = json['age'] ?? "",
+        phone = json['phone'] ?? "",
+        photo = json['photo'] ?? "",
+        token = json['token'] ?? "",
+        wallet = json['wallet'] ?? "",
+        isGoogle = json['isGoogle'] ?? "",
+        isFacebook = json['isFacebook'] ?? "";
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'photo': photo,
+        'token': token,
+        'wallet': wallet,
+        'isGoogle': isGoogle,
+        'isFacebook': isFacebook
+      };
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
-  
   final Function filter;
 
   appBar_Widget(this.filter);
-  
+
   @override
   Widget build(BuildContext context) {
     return PreferredSize(

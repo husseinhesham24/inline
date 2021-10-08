@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:inline/modules/user.dart';
+import 'package:inline/modules/user_shared_Preferences.dart';
 import 'package:inline/screens/login_screen.dart';
 import 'google_signin_api.dart';
 
 class LogoutApi {
   static Future<void> logout(
-      BuildContext ctx, User userData, String endPoint) async {
+      BuildContext ctx, String endPoint) async {
+    Map<String,dynamic> jsondatais = jsonDecode(UserSharedPreferences.getString('userData')!);
+    User userData = User.fromJson(jsondatais);
+
     print("logout token");
     print(userData.token);
     final response = await http.post(

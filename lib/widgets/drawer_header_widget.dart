@@ -1,13 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../modules/user_shared_Preferences.dart';
 import '../modules/user.dart';
 
 class Drawer_Header extends StatelessWidget {
-  final User userData;
-
-  Drawer_Header(this.userData);
 
   @override
   Widget build(BuildContext context) {
+    Map<String,dynamic> jsondatais = jsonDecode(UserSharedPreferences.getString('userData')!);
+    User userData = User.fromJson(jsondatais);
     return Container(
       height: 120,
       width: double.infinity,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import '../api/google_signin_api.dart';
 import '../api/getUsers_api.dart';
 import '../modules/user.dart';
 import '../modules/user_shared_Preferences.dart';
@@ -11,14 +12,12 @@ import 'package:http/http.dart' as http;
 import 'services_screen.dart';
 
 class MyHomePage extends StatelessWidget {
-  
-
   void navToSigningPage(BuildContext ctx) async {
-    String? response = UserSharedPreferences.getString('userData');
 
+    String? response = UserSharedPreferences.getString('userData');
     print("home SharedPreferences");
     print(response);
-
+    
     if (response != null) {
       GetUsersApi.checkUser(
         "https://inline.mrtechnawy.com/api/auth/user-profile",

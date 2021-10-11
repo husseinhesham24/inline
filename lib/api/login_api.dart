@@ -5,6 +5,8 @@ import '../modules/user.dart';
 import '../screens/services_screen.dart';
 import 'package:http/http.dart' as http;
 
+import 'getProviders_api.dart';
+
 class LoginApi {
   static Future<void> login(
     String username,
@@ -56,6 +58,11 @@ class LoginApi {
 
             String UserData = jsonEncode(userObject);
             UserSharedPreferences.setString('userData', UserData);
+            GetprovidersApi.getProviders(
+              "banking",
+              "https://inline.mrtechnawy.com/api/provider/all",
+              ctx,
+            );
             return Services_Screen();
           },
         ),

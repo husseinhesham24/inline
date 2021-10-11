@@ -1,17 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:inline/modules/user_shared_Preferences.dart';
-import 'package:inline/screens/services_screen.dart';
-import 'package:inline/screens/signing_screen.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import '../modules/user_shared_Preferences.dart';
+import '../screens/services_screen.dart';
+import '../screens/signing_screen.dart';
 import '../modules/user.dart';
 import 'package:http/http.dart' as http;
+import 'getProviders_api.dart';
+import 'google_signin_api.dart';
 
 class GetUsersApi {
   static Future<void> checkUser(
     String endPoint,
     BuildContext ctx,
   ) async {
-    Map<String,dynamic> jsondatais = jsonDecode(UserSharedPreferences.getString('userData')!);
+    Map<String, dynamic> jsondatais =
+        jsonDecode(UserSharedPreferences.getString('userData')!);
     User userData = User.fromJson(jsondatais);
     final response = await http.get(
       Uri.parse(endPoint),
@@ -34,16 +38,28 @@ class GetUsersApi {
     } else {
       data = jsonDecode(response.body);
     }
-    
+
     if (data['status']) {
-       Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Services_Screen();
-        },
-      ),
-    );
+      Navigator.of(ctx).push(
+        MaterialPageRoute(
+          builder: (_) {
+            GetprovidersApi.getProviders(
+              "banking",
+              "https://inline.mrtechnawy.com/api/provider/all",
+              ctx,
+            );
+            return Services_Screen();
+          },
+        ),
+      );
     } else {
+      if (userData.isGoogle) {
+        await GoogleSignInApi.logout();
+      }
+
+      if (userData.isFacebook) {
+        await FacebookAuth.instance.logOut();
+      }
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {

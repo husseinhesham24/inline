@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import '../modules/provider.dart';
+import '../modules/branch.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../screens/signing_screen.dart';
 import '../modules/user.dart';
@@ -11,8 +11,10 @@ import 'google_signin_api.dart';
 
 class GetprovidersApi {
   static Future<void> getProviders(
-    String targetList,
+    int id,
     String endPoint,
+    double lat,
+    double lon,
     BuildContext ctx,
   ) async {
     Map<String, dynamic> jsondatais =
@@ -20,7 +22,7 @@ class GetprovidersApi {
     User userData = User.fromJson(jsondatais);
     //final uri = Uri.https('https://inline.mrtechnawy.com', '/api/provider/all', queryParameters);
     final response = await http.get(
-      Uri.parse(endPoint + '?provider_type=${targetList}'),
+      Uri.parse('${endPoint}?id=${id}&lat=${lat}&lon=${lon}'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -28,7 +30,7 @@ class GetprovidersApi {
       },
     );
 
-    print("provider list data");
+    print("branches list data");
     print(response.body);
 
     final data;
@@ -42,17 +44,17 @@ class GetprovidersApi {
     }
 
     if (data['status']) {
-      List<Provider> providerList = [];
+      List<Branch> branchList = [];
       //print("loop ya beh");
-      data['providers'].forEach((entry) {
+      data['branches'].forEach((entry) {
         // print(
         //     'id=${entry['id']}\nname=${entry['name']}\nimage=${entry['image']}');
-        providerList.add(Provider(
+        branchList.add(Branch(
             id: entry['id'], name: entry['name'], photo: entry['image']));
       });
 
-      final String encodedData = Provider.encode(providerList);
-      UserSharedPreferences.setString('providerData', encodedData);
+      final String encodedData = Branch.encode(branchList);
+      UserSharedPreferences.setString('branchData', encodedData);
 
       // providerList.forEach((element) {
       //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');

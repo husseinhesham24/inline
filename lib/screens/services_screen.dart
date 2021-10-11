@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inline/api/getProviders_api.dart';
 import 'package:inline/modules/user_shared_Preferences.dart';
 import '../modules/user.dart';
 import '../widgets/buttonList_widget.dart';
@@ -9,7 +10,6 @@ import '../widgets/appBar_widget.dart';
 import '../widgets/main_drawer_widget.dart';
 
 class Services_Screen extends StatefulWidget {
-
   @override
   _Services_ScreenState createState() => _Services_ScreenState();
 }
@@ -20,7 +20,7 @@ class _Services_ScreenState extends State<Services_Screen> {
     {"title": "orange", "image": "null"},
     {"title": "Etslate", "image": "null"},
   ];
-  
+
   List<Map<String, dynamic>> _foundList = [];
 
   @override
@@ -115,6 +115,3 @@ class _Services_ScreenState extends State<Services_Screen> {
     );
   }
 }
-
-
-

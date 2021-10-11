@@ -9,8 +9,8 @@ import '../modules/user.dart';
 import 'package:http/http.dart' as http;
 import 'google_signin_api.dart';
 
-class GetprovidersApi {
-  static Future<void> getProviders(
+class GetBranchesApi {
+  static Future<void> getBranches(
     int id,
     String endPoint,
     double lat,

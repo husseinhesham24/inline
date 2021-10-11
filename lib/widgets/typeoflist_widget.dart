@@ -19,7 +19,7 @@ class TypeOfList_widget extends StatelessWidget {
             width: 60,
             child: Transform.scale(
               scale: 0.6,
-              child: Image.asset(imgPath),
+              child: imgPath!=null?(imgPath) as Widget:null,
             ),
           ),
         Text(

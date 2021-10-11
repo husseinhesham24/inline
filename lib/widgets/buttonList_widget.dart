@@ -5,8 +5,9 @@ import '../widgets/typeoflist_widget.dart';
 class ButtonList_Widget extends StatelessWidget {
   final String buttonText;
   final String buttonImg;
+  final Function selectHandler;
 
-  ButtonList_Widget(this.buttonText, this.buttonImg);
+  ButtonList_Widget(this.buttonText, this.buttonImg, this.selectHandler);
 
   bool isImg(String path) {
     if (buttonImg == "null") {
@@ -16,14 +17,14 @@ class ButtonList_Widget extends StatelessWidget {
   }
 
   void navToPayPage(BuildContext ctx) {
-  Navigator.of(ctx).push(
-    MaterialPageRoute(
-      builder: (_) {
-        return Pay_Screen();
-      },
-    ),
-  );
-}
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Pay_Screen();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class ButtonList_Widget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 20),
       // ignore: deprecated_member_use
       child: FlatButton(
-        onPressed: ()=>navToPayPage(context),
+        onPressed: () => selectHandler,
         child: Container(
           padding: EdgeInsets.only(right: pad),
           width: 200,

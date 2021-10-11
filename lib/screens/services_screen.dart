@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:inline/api/getProviders_api.dart';
-import 'package:inline/modules/user_shared_Preferences.dart';
+import 'package:inline/modules/branch.dart';
+import '../api/getProviders_api.dart';
+import '../api/getBranches_api.dart';
+import '../modules/provider.dart';
+import '../modules/user_shared_Preferences.dart';
 import '../modules/user.dart';
 import '../widgets/buttonList_widget.dart';
 import '../widgets/typeoflist_widget.dart';
@@ -15,29 +18,65 @@ class Services_Screen extends StatefulWidget {
 }
 
 class _Services_ScreenState extends State<Services_Screen> {
-  final List<Map<String, dynamic>> _allList = [
-    {"title": "Vodafone", "image": "assets/images/ph2.png"},
-    {"title": "orange", "image": "null"},
-    {"title": "Etslate", "image": "null"},
+  final List<dynamic> _allList = [
+    [
+      "banking",
+      "telecommunication",
+      "clinics",
+    ]
   ];
 
-  List<Map<String, dynamic>> _foundList = [];
+  var _index = 0;
+  String _title = "";
 
+  List<dynamic> _foundList = [];
+
+  void getProvidersList(BuildContext ctx, String target) {
+    GetprovidersApi.getProviders(
+      target,
+      "https://inline.mrtechnawy.com/api/provider/all",
+      ctx,
+    );
+
+    setState(() {
+      _allList.add(
+          Provider.decode(UserSharedPreferences.getString('providerData')!));
+      _index = _index + 1;
+    });
+  }
+
+  void getBranchesList(BuildContext ctx, int id, double lan, double lon) {
+    GetBranchesApi.getBranches(
+      id,
+      "https://inline.mrtechnawy.com/api/provider/all",
+      lan,
+      lon,
+      ctx,
+    );
+
+    setState(() {
+      _allList
+          .add(Branch.decode(UserSharedPreferences.getString('branchData')!));
+      _index = _index + 1;
+    });
+  }
+
+  /////////////////////////////////search filter/////////////
   @override
   initState() {
     // at the beginning, all users are shown
-    _foundList = _allList;
+    _foundList = _allList[_index];
     super.initState();
   }
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
+    List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = _allList;
+      results = _allList[_index];
     } else {
-      results = _allList
+      results = _allList[_index]
           .where((company) => company["title"]
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
@@ -48,6 +87,15 @@ class _Services_ScreenState extends State<Services_Screen> {
     // Refresh the UI
     setState(() {
       _foundList = results;
+    });
+  }
+
+  /////////////////////////////////search filter/////////////
+
+  void navToBack() {
+    setState(() {
+      _index = _index - 1;
+      _allList.removeLast();
     });
   }
 
@@ -69,7 +117,8 @@ class _Services_ScreenState extends State<Services_Screen> {
                   //is there is photo or title put it other wise faks
                   Padding(
                     padding: EdgeInsets.only(right: 40),
-                    child: TypeOfList_widget("Vodafone", path),
+                    child:
+                        _index > 0 ? TypeOfList_widget("Vodafone", path) : null,
                   ),
                   SizedBox(
                     height: 50,
@@ -90,9 +139,12 @@ class _Services_ScreenState extends State<Services_Screen> {
                   //         ),
                   // ),
                   ..._foundList.map((item) {
+                    String name, photo;
+                    Function handler;
                     return ButtonList_Widget(
-                      item["title"].toString(),
-                      item["image"].toString(),
+                      item.name,
+                      item.photo,
+                      () => getProvidersList(context, item.name),
                     );
                   }).toList(),
                 ],
@@ -104,7 +156,7 @@ class _Services_ScreenState extends State<Services_Screen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
-                  onPressed: null,
+                  onPressed: _index == 0 ? null : navToBack,
                   icon: Icon(Icons.arrow_back_ios_sharp),
                 ),
               ],

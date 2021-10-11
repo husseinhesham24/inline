@@ -43,11 +43,6 @@ class GetUsersApi {
       Navigator.of(ctx).push(
         MaterialPageRoute(
           builder: (_) {
-            GetprovidersApi.getProviders(
-              "banking",
-              "https://inline.mrtechnawy.com/api/provider/all",
-              ctx,
-            );
             return Services_Screen();
           },
         ),

@@ -45,7 +45,7 @@ class LogoutApi {
       await FacebookAuth.instance.logOut();
     }
 
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       return Login_Screen();
     }));
   }

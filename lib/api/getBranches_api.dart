@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:inline/screens/services_screen.dart';
 import '../modules/branch.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../screens/signing_screen.dart';
@@ -16,6 +17,7 @@ class GetBranchesApi {
     double lat,
     double lon,
     BuildContext ctx,
+    Function setData,
   ) async {
     Map<String, dynamic> jsondatais =
         jsonDecode(UserSharedPreferences.getString('userData')!);
@@ -49,13 +51,13 @@ class GetBranchesApi {
       data['branches'].forEach((entry) {
         // print(
         //     'id=${entry['id']}\nname=${entry['name']}\nimage=${entry['image']}');
-        branchList.add(Branch(
-            id: entry['id'], name: entry['name'], photo: entry['image']));
+        branchList.add(Branch(id: entry['id'], name: entry['name']));
       });
 
       final String encodedData = Branch.encode(branchList);
       UserSharedPreferences.setString('branchData', encodedData);
 
+      setData();
       // providerList.forEach((element) {
       //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');
       // });

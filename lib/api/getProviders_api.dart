@@ -14,6 +14,7 @@ class GetprovidersApi {
     String targetList,
     String endPoint,
     BuildContext ctx,
+    Function setData,
   ) async {
     Map<String, dynamic> jsondatais =
         jsonDecode(UserSharedPreferences.getString('userData')!);
@@ -52,8 +53,10 @@ class GetprovidersApi {
       });
 
       final String encodedData = Provider.encode(providerList);
+      // print("encodedData");
+      // print(encodedData);
       UserSharedPreferences.setString('providerData', encodedData);
-
+      setData();
       // providerList.forEach((element) {
       //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');
       // });

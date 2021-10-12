@@ -42,7 +42,7 @@ class LoginApi {
     // print("lol");
     // print(_data?['user']?['photo']);
     if (data['status']) {
-      Navigator.of(ctx).push(
+      Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
           builder: (_) {
             final userObject = new User(
@@ -58,11 +58,6 @@ class LoginApi {
 
             String UserData = jsonEncode(userObject);
             UserSharedPreferences.setString('userData', UserData);
-            GetprovidersApi.getProviders(
-              "banking",
-              "https://inline.mrtechnawy.com/api/provider/all",
-              ctx,
-            );
             return Services_Screen();
           },
         ),

@@ -40,7 +40,7 @@ class GetUsersApi {
     }
 
     if (data['status']) {
-      Navigator.of(ctx).push(
+      Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
           builder: (_) {
             return Services_Screen();

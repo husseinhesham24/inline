@@ -11,7 +11,6 @@ class Branch {
   // final DateTime startTime;
   // final DateTime closeTime;
   // final String providerId;
-  final String photo;
 
   Branch({
     required this.id,
@@ -19,7 +18,6 @@ class Branch {
     // required this.lat,
     // required this.lon,
     // required this.phone,
-    required this.photo,
   });
 
   factory Branch.fromJson(Map<String, dynamic> json) {
@@ -30,7 +28,6 @@ class Branch {
       // address: json['address'],
       // type: json['type'],
       // phone: json['phone'],
-      photo: json['photo'],
     );
   }
   static Map<String, dynamic> toMap(Branch branch) => {
@@ -40,7 +37,6 @@ class Branch {
         // 'address': branch.address,
         // 'type': branch.type,
         // 'phone': branch.phone,
-        'photo': branch.photo,
       };
 
   static String encode(List<Branch> branch) => json.encode(

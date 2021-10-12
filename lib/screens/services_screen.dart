@@ -21,7 +21,7 @@ class _Services_ScreenState extends State<Services_Screen> {
   final List<dynamic> _allList = [
     [
       "banking",
-      "telecommunication",
+      "telecommunicationnnnnnnnnnnnnnnnnnn",
       "clinics",
     ]
   ];
@@ -31,33 +31,23 @@ class _Services_ScreenState extends State<Services_Screen> {
 
   List<dynamic> _foundList = [];
 
-  void getProvidersList(BuildContext ctx, String target) {
-    GetprovidersApi.getProviders(
-      target,
-      "https://inline.mrtechnawy.com/api/provider/all",
-      ctx,
-    );
-
+  void _setProvidersList() {
     setState(() {
       _allList.add(
           Provider.decode(UserSharedPreferences.getString('providerData')!));
+      print("setState _allList");
+      print(_allList);
       _index = _index + 1;
+      _foundList = _allList[_index];
     });
   }
 
-  void getBranchesList(BuildContext ctx, int id, double lan, double lon) {
-    GetBranchesApi.getBranches(
-      id,
-      "https://inline.mrtechnawy.com/api/provider/all",
-      lan,
-      lon,
-      ctx,
-    );
-
+  void _setBranchesList() {
     setState(() {
       _allList
           .add(Branch.decode(UserSharedPreferences.getString('branchData')!));
       _index = _index + 1;
+      _foundList = _allList[_index];
     });
   }
 
@@ -96,13 +86,15 @@ class _Services_ScreenState extends State<Services_Screen> {
     setState(() {
       _index = _index - 1;
       _allList.removeLast();
+      _foundList = _allList[_index];
     });
   }
 
-  final String path = "assets/images/ph2.png";
-
   @override
   Widget build(BuildContext context) {
+    print("founded");
+    print(_index);
+    print(_foundList);
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Scaffold(
@@ -115,10 +107,10 @@ class _Services_ScreenState extends State<Services_Screen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //is there is photo or title put it other wise faks
-                  Padding(
-                    padding: EdgeInsets.only(right: 40),
-                    child:
-                        _index > 0 ? TypeOfList_widget("Vodafone", path) : null,
+                  Container(
+                    child: _index > 1
+                        ? TypeOfList_widget("Vodafone", "null")
+                        : null,
                   ),
                   SizedBox(
                     height: 50,
@@ -139,29 +131,57 @@ class _Services_ScreenState extends State<Services_Screen> {
                   //         ),
                   // ),
                   ..._foundList.map((item) {
-                    String name, photo;
-                    Function handler;
-                    return ButtonList_Widget(
-                      item.name,
-                      item.photo,
-                      () => getProvidersList(context, item.name),
-                    );
+                    String name = "", photo = "null";
+                    dynamic handler = () {};
+                    if (_index == 0) {
+                      name = item;
+                      photo = "null";
+                      handler = () => GetprovidersApi.getProviders(
+                            name,
+                            "https://inline.mrtechnawy.com/api/provider/all",
+                            context,
+                            _setProvidersList,
+                          );
+                    } else if (_index == 1) {
+                      // print(item);
+                      print(item.name);
+                      print(item.id);
+                      // print(item.photo);
+                      name = item.name;
+                      photo = "null";
+                      //but the user lan and lon
+                      handler = () => GetBranchesApi.getBranches(
+                            item.id,
+                            "https://inline.mrtechnawy.com/api/provider/details",
+                            0.0,
+                            0.0,
+                            context,
+                            _setBranchesList,
+                          );
+                    } else if (_index == 2) {
+                      print(item.name);
+                      name = item.name;
+                    }
+
+                    return ButtonList_Widget(name, photo, handler);
                   }).toList(),
                 ],
               ),
             ),
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: _index == 0 ? null : navToBack,
-                  icon: Icon(Icons.arrow_back_ios_sharp),
+          bottomNavigationBar: _index == 0
+              ? null
+              : BottomAppBar(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: navToBack,
+                        icon: Icon(Icons.arrow_back_ios_sharp),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
         );
       },
     );

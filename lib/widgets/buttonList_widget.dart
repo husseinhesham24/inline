@@ -5,7 +5,7 @@ import '../widgets/typeoflist_widget.dart';
 class ButtonList_Widget extends StatelessWidget {
   final String buttonText;
   final String buttonImg;
-  final Function selectHandler;
+  final VoidCallback selectHandler;
 
   ButtonList_Widget(this.buttonText, this.buttonImg, this.selectHandler);
 
@@ -33,24 +33,24 @@ class ButtonList_Widget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 20),
       // ignore: deprecated_member_use
       child: FlatButton(
-        onPressed: () => selectHandler,
+        onPressed: selectHandler,
         child: Container(
-          padding: EdgeInsets.only(right: pad),
-          width: 200,
+          //padding: EdgeInsets.only(right: pad),
+          width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (isImg(buttonImg))
-                Container(
-                  height: 50,
-                  //width: 20,
-                  width: 60,
-                  child: Transform.scale(
-                    scale: 0.6,
-                    child: Image.asset(buttonImg),
-                  ),
-                ),
+              // if (isImg(buttonImg))
+              //   Container(
+              //     height: 50,
+              //     //width: 20,
+              //     width: 60,
+              //     child: Transform.scale(
+              //       scale: 0.6,
+              //       child: Image.asset(buttonImg),
+              //     ),
+              //   ),
               Text(
                 buttonText,
                 style: TextStyle(
@@ -71,7 +71,7 @@ class ButtonList_Widget extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(78),
         ),
-        minWidth: 250,
+        minWidth: double.infinity,
         height: 70,
       ),
     );

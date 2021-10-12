@@ -42,7 +42,7 @@ class SocialApi {
     print("lol");
     // print(_data?['user']?['photo']);
     if (data['status']) {
-      Navigator.of(ctx).push(
+      Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
           builder: (_) {
             final userObject = new User(

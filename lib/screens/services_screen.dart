@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inline/modules/branch.dart';
+import 'package:inline/api/getServices_api.dart';
+import '../modules/branch.dart';
+import '../modules/service.dart';
 import '../api/getProviders_api.dart';
 import '../api/getBranches_api.dart';
 import '../modules/provider.dart';
@@ -49,6 +51,15 @@ class _Services_ScreenState extends State<Services_Screen> {
     });
   }
 
+  void _setServicesList() {
+    setState(() {
+      _allList
+          .add(Service.decode(UserSharedPreferences.getString('serviceData')!));
+      _index = _index + 1;
+      _foundList = _allList[_index];
+    });
+  }
+
   /////////////////////////////////search filter/////////////
   @override
   initState() {
@@ -72,11 +83,10 @@ class _Services_ScreenState extends State<Services_Screen> {
             results.add(_allList[_index][i]);
           }
         }
-      }
-      else
-      {
+      } else {
         for (int i = 0; i < _allList[_index].length; i++) {
-          if (_allList[_index][i].name
+          if (_allList[_index][i]
+              .name
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase())) {
             results.add(_allList[_index][i]);
@@ -145,8 +155,8 @@ class _Services_ScreenState extends State<Services_Screen> {
                                   );
                             } else if (_index == 1) {
                               // print(item);
-                              print(item.name);
-                              print(item.id);
+                              // print(item.name);
+                              // print(item.id);
                               // print(item.photo);
                               name = item.name;
                               photo = "null";
@@ -165,8 +175,17 @@ class _Services_ScreenState extends State<Services_Screen> {
                                 );
                               };
                             } else if (_index == 2) {
-                              print(item.name);
                               name = item.name;
+                              photo = "null";
+                              //but the user lan and lon
+                              handler = () {
+                                GetServicesApi.getServices(
+                                  item.id,
+                                  "https://inline.mrtechnawy.com/api/branch/details",
+                                  context,
+                                  _setServicesList,
+                                );
+                              };
                             }
                             return ButtonList_Widget(name, photo, handler);
                           })

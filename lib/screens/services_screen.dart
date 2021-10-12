@@ -1,16 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:inline/modules/branch.dart';
 import '../api/getProviders_api.dart';
 import '../api/getBranches_api.dart';
 import '../modules/provider.dart';
 import '../modules/user_shared_Preferences.dart';
-import '../modules/user.dart';
 import '../widgets/buttonList_widget.dart';
 import '../widgets/typeoflist_widget.dart';
 import '../widgets/appBar_widget.dart';
 import '../widgets/main_drawer_widget.dart';
+import 'package:location/location.dart';
 
 class Services_Screen extends StatefulWidget {
   @override
@@ -66,11 +64,25 @@ class _Services_ScreenState extends State<Services_Screen> {
       // if the search field is empty or only contains white-space, we'll display all users
       results = _allList[_index];
     } else {
-      results = _allList[_index]
-          .where((company) => company["title"]
+      if (_index == 0) {
+        for (int i = 0; i < _allList[_index].length; i++) {
+          if (_allList[_index][i]
               .toLowerCase()
-              .contains(enteredKeyword.toLowerCase()))
-          .toList();
+              .contains(enteredKeyword.toLowerCase())) {
+            results.add(_allList[_index][i]);
+          }
+        }
+      }
+      else
+      {
+        for (int i = 0; i < _allList[_index].length; i++) {
+          if (_allList[_index][i].name
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase())) {
+            results.add(_allList[_index][i]);
+          }
+        }
+      }
       // we use the toLowerCase() method to make it case-insensitive
     }
 
@@ -100,73 +112,70 @@ class _Services_ScreenState extends State<Services_Screen> {
         return Scaffold(
           drawer: MainDrawer(),
           appBar: appBar_Widget(_runFilter),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  //is there is photo or title put it other wise faks
-                  Container(
-                    child: _index > 1
-                        ? TypeOfList_widget("Vodafone", "null")
-                        : null,
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //is there is photo or title put it other wise faks
+                Container(
+                  child:
+                      _index > 1 ? TypeOfList_widget("Vodafone", "null") : null,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
 
-                  // Expanded(
-                  //   child: _foundList.length > 0
-                  //       ? ListView.builder(
-                  //           itemCount: _foundList.length,
-                  //           itemBuilder: (context, index) => ButtonList_Widget(
-                  //             _foundList[index]["title"].toString(),
-                  //             _foundList[index]["image"].toString(),
-                  //           ),
-                  //         )
-                  //       : Text(
-                  //           'No results found',
-                  //           style: TextStyle(fontSize: 24),
-                  //         ),
-                  // ),
-                  ..._foundList.map((item) {
-                    String name = "", photo = "null";
-                    dynamic handler = () {};
-                    if (_index == 0) {
-                      name = item;
-                      photo = "null";
-                      handler = () => GetprovidersApi.getProviders(
-                            name,
-                            "https://inline.mrtechnawy.com/api/provider/all",
-                            context,
-                            _setProvidersList,
-                          );
-                    } else if (_index == 1) {
-                      // print(item);
-                      print(item.name);
-                      print(item.id);
-                      // print(item.photo);
-                      name = item.name;
-                      photo = "null";
-                      //but the user lan and lon
-                      handler = () => GetBranchesApi.getBranches(
-                            item.id,
-                            "https://inline.mrtechnawy.com/api/provider/details",
-                            0.0,
-                            0.0,
-                            context,
-                            _setBranchesList,
-                          );
-                    } else if (_index == 2) {
-                      print(item.name);
-                      name = item.name;
-                    }
-
-                    return ButtonList_Widget(name, photo, handler);
-                  }).toList(),
-                ],
-              ),
+                Expanded(
+                  child: _foundList.length > 0
+                      ? ListView.builder(
+                          itemCount: _foundList.length,
+                          itemBuilder: (context, i) {
+                            dynamic item = _foundList[i];
+                            String name = "", photo = "null";
+                            dynamic handler = () {};
+                            if (_index == 0) {
+                              name = item;
+                              photo = "null";
+                              handler = () => GetprovidersApi.getProviders(
+                                    name,
+                                    "https://inline.mrtechnawy.com/api/provider/all",
+                                    context,
+                                    _setProvidersList,
+                                  );
+                            } else if (_index == 1) {
+                              // print(item);
+                              print(item.name);
+                              print(item.id);
+                              // print(item.photo);
+                              name = item.name;
+                              photo = "null";
+                              //but the user lan and lon
+                              handler = () async {
+                                Location location = new Location();
+                                LocationData locationData =
+                                    await location.getLocation();
+                                GetBranchesApi.getBranches(
+                                  item.id,
+                                  "https://inline.mrtechnawy.com/api/provider/details",
+                                  locationData.latitude ?? 0.0,
+                                  locationData.longitude ?? 0.0,
+                                  context,
+                                  _setBranchesList,
+                                );
+                              };
+                            } else if (_index == 2) {
+                              print(item.name);
+                              name = item.name;
+                            }
+                            return ButtonList_Widget(name, photo, handler);
+                          })
+                      : Text(
+                          'No results found',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                ),
+              ],
             ),
           ),
           bottomNavigationBar: _index == 0

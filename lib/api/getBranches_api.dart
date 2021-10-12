@@ -22,6 +22,7 @@ class GetBranchesApi {
     Map<String, dynamic> jsondatais =
         jsonDecode(UserSharedPreferences.getString('userData')!);
     User userData = User.fromJson(jsondatais);
+    print("lon=${lon}\nlat=${lat}");
     //final uri = Uri.https('https://inline.mrtechnawy.com', '/api/provider/all', queryParameters);
     final response = await http.get(
       Uri.parse('${endPoint}?id=${id}&lat=${lat}&lon=${lon}'),

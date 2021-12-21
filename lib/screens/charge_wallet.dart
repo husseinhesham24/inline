@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:inline/screens/charge_wallet.dart';
-import '../screens/services_screen.dart';
-import '../widgets/button_widget.dart';
-import '../widgets/input_widget.dart';
-import '../screens/Final_Screen.dart';
-import '../screens/pay_screen.dart';
 
-class Confirm_Screen extends StatefulWidget {
+class ChargeWallet_Widget extends StatefulWidget {
+  final Function chargeWallet;
+  ChargeWallet_Widget(this.chargeWallet);
+
   @override
-  _Confirm_ScreenState createState() => _Confirm_ScreenState();
+  _ChargeWallet_WidgetState createState() => _ChargeWallet_WidgetState();
 }
 
-class _Confirm_ScreenState extends State<Confirm_Screen> {
+class _ChargeWallet_WidgetState extends State<ChargeWallet_Widget> {
+  final _costController = TextEditingController();
+  final _cardNumberController = TextEditingController();
+  final _expMonthController = TextEditingController();
+  final _expYearController = TextEditingController();
+
+  void _submitData() {
+    final enteredcost = _costController.text;
+    final enteredcardNumber = _cardNumberController.text;
+    final enteredexpMonth = _expMonthController.text;
+    final enteredexpYear = _expYearController.text;
+
+    widget.chargeWallet();
+    Navigator.of(context).pop();
+  }
+
   void navToBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
-  }
-
-  void _chargeWallet(String txTitle, double txAmount, DateTime chosenDate) {
-    setState(() {
-      // change the wallet value
-    });
-  }
-
-  void _startChargeWallet(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return ChargeWallet_Widget(_chargeWallet);
-        },
-      ),
-    );
   }
 
   @override
@@ -92,14 +88,6 @@ class _Confirm_ScreenState extends State<Confirm_Screen> {
                 ),
               ],
             ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            backgroundColor: Color(0xff5A8D40),
-            onPressed: () {
-              _startChargeWallet(context);
-            },
           ),
         );
       },

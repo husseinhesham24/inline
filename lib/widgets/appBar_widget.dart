@@ -15,7 +15,7 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 5),
               child: Builder(
                 builder: (context) => GestureDetector(
                   onTap: () {
@@ -33,7 +33,7 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
             ),
             Container(
               height: 40,
-              width: 250,
+              width: 220,
               child: TextField(
                 onChanged: (value) => filter(value),
                 style: TextStyle(

@@ -71,13 +71,13 @@ class _Login_ScreenState extends State<Login_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (ctx, constraints) {
+    // return LayoutBuilder(
+    //   builder: (ctx, constraints) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              // width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height,
               //padding: EdgeInsets.only(bottom: 200),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +148,7 @@ class _Login_ScreenState extends State<Login_Screen> {
             ),
           ),
         );
-      },
-    );
+      //},
+    //);
   }
 }

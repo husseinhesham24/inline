@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inline/api/logout_api.dart';
+import '../api/logout_api.dart';
+import '../screens/confirm_screen.dart';
 import '../widgets/draweritem_widget.dart';
 import 'drawer_header_widget.dart';
 
@@ -12,6 +13,17 @@ class MainDrawer extends StatelessWidget {
       "https://inline.mrtechnawy.com/api/auth/logout",
     );
   }
+
+  void navToConfirmPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Confirm_Screen();
+        },
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class MainDrawer extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          DrawerItem("Wallet", Icons.money, null),
+          DrawerItem("Wallet", Icons.money, navToConfirmPage),
           SizedBox(
             height: 20,
           ),

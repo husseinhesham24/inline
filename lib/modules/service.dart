@@ -3,7 +3,7 @@ import 'dart:convert';
 class Service {
   final int id;
   final String name;
-  final int cost;
+  final String cost;
 
   Service({
     required this.id,

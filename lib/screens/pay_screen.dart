@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import '../modules/user.dart';
+import '../screens/Final_Screen.dart';
 import '../screens/services_screen.dart';
 import '../widgets/paragraph_widget.dart';
-import '../screens/confirm_screen.dart';
 import '../widgets/button_widget.dart';
 
 class Pay_Screen extends StatelessWidget {
   
-  void navToConfirmPage(BuildContext ctx) {
+  void navToFinalPage(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Confirm_Screen();
+          return Final_Screen();
         },
       ),
     );
@@ -37,7 +36,7 @@ class Pay_Screen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child:
-                    Button_Widget("Confirm your reservation", navToConfirmPage),
+                    Button_Widget("Confirm your reservation", navToFinalPage),
               ),
               Paragraph_Widget("Your Services Costs:","5 Points"),
             ],

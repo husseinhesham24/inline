@@ -16,15 +16,15 @@ class ButtonList_Widget extends StatelessWidget {
     return true;
   }
 
-  void navToPayPage(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Pay_Screen();
-        },
-      ),
-    );
-  }
+  // void navToPayPage(BuildContext ctx) {
+  //   Navigator.of(ctx).push(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return Pay_Screen();
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

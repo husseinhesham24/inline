@@ -9,8 +9,11 @@ import 'google_signin_api.dart';
 
 class LogoutApi {
   static Future<void> logout(
-      BuildContext ctx, String endPoint) async {
-    Map<String,dynamic> jsondatais = jsonDecode(UserSharedPreferences.getString('userData')!);
+    BuildContext ctx,
+    String endPoint,
+  ) async {
+    Map<String, dynamic> jsondatais =
+        jsonDecode(UserSharedPreferences.getString('userData')!);
     User userData = User.fromJson(jsondatais);
 
     print("logout token");

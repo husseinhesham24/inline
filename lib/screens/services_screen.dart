@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inline/api/getServices_api.dart';
+import '../api/getServices_api.dart';
+import '../screens/pay_screen.dart';
 import '../modules/branch.dart';
 import '../modules/service.dart';
 import '../api/getProviders_api.dart';
@@ -21,7 +22,7 @@ class _Services_ScreenState extends State<Services_Screen> {
   final List<dynamic> _allList = [
     [
       "banking",
-      "telecommunicationnnnnnnnnnnnnnnnnnn",
+      "telecommunication",
       "clinics",
     ]
   ];
@@ -58,6 +59,16 @@ class _Services_ScreenState extends State<Services_Screen> {
       _index = _index + 1;
       _foundList = _allList[_index];
     });
+  }
+
+  void navToPayPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Pay_Screen();
+        },
+      ),
+    );
   }
 
   /////////////////////////////////search filter/////////////
@@ -175,6 +186,8 @@ class _Services_ScreenState extends State<Services_Screen> {
                                 );
                               };
                             } else if (_index == 2) {
+                              print("service loool");
+                              print(item.name);
                               name = item.name;
                               photo = "null";
                               //but the user lan and lon
@@ -187,6 +200,8 @@ class _Services_ScreenState extends State<Services_Screen> {
                                 );
                               };
                             }
+                            
+                            
                             return ButtonList_Widget(name, photo, handler);
                           })
                       : Text(

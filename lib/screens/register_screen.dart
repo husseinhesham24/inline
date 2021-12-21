@@ -30,7 +30,7 @@ class _Register_ScreenState extends State<Register_Screen> {
       _dateOfBirth.text,
       "assets/images/unknown.png",
       _getData,
-      false, 
+      false,
       false,
       ctx,
     );
@@ -170,7 +170,7 @@ class _Register_ScreenState extends State<Register_Screen> {
               true,
             ),
             SizedBox(
-              height: 100,
+              height: 50,
             ),
             Button_Widget("Start", _sendRequest),
           ],

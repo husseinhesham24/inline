@@ -185,7 +185,7 @@ class _Services_ScreenState extends State<Services_Screen> {
                                   _setBranchesList,
                                 );
                               };
-                            } else if (_index == 2) {
+                            } else {
                               print("service loool");
                               print(item.name);
                               name = item.name;

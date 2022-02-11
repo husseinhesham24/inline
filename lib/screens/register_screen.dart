@@ -161,7 +161,7 @@ class _Register_ScreenState extends State<Register_Screen> {
             Input_Widget(
               "Confirm Password",
               _passwordConfirmation,
-              (_data == null || _data['status'])
+              (_data == null || _data['status'])  
                   ? null
                   : _data?['errors']?['password']?[0],
               TextInputType.text,

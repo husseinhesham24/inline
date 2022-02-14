@@ -10,14 +10,14 @@ class Paragraph_Widget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             str1,
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 25,
               fontWeight: FontWeight.bold,
               color: Color(0xff000000),
             ),
@@ -28,7 +28,7 @@ class Paragraph_Widget extends StatelessWidget {
           Text(
             str2,
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 23,
               fontWeight: FontWeight.bold,
               color: Color(0xff000000),
             ),

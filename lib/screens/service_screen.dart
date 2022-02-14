@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inline/screens/pay_screen.dart';
 
 import '../modules/service.dart';
 import '../modules/user_shared_Preferences.dart';
@@ -20,7 +21,7 @@ class _Service_ScreenState extends State<Service_Screen> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Service_Screen();
+          return Pay_Screen();
         },
       ),
     );
@@ -92,13 +93,15 @@ class _Service_ScreenState extends State<Service_Screen> {
                       itemBuilder: (context, i) {
                         dynamic item = _foundList[i];
                         String name = "", photo = "null";
-                        dynamic handler = () {};
+                        dynamic handler = (BuildContext ctx) {};
                         print("service loool");
                         print(item.name);
                         name = item.name;
                         photo = "null";
                         //but the user lan and lon
-                        handler = () {};
+                        handler = () {
+                          _navToPay(context);
+                        };
                         return ButtonList_Widget(name, photo, handler);
                       })
                   : Text(

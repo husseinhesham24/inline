@@ -46,13 +46,21 @@ class ChargeApi {
       // then parse the JSON.
       data = jsonDecode(response.body);
     } else {
-      data = jsonDecode(response.body);
+      final snackBar = SnackBar(
+        content: Text("There are so something wrong please enter valid info"),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {},
+        ),
+      );
+
+      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+      return;
     }
 
-    //print("lol wallet2");
+    print("lol wallet");
     print(data);
 
-    
     if (data['status']) {
       Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
@@ -77,7 +85,7 @@ class ChargeApi {
       );
     } else {
       final snackBar = SnackBar(
-        content: const Text('Sorry, we could not find your account.'),
+        content: Text(data['message']),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {},

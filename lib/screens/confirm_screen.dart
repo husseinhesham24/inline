@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:inline/screens/charge_wallet.dart';
+import '../screens/charge_wallet.dart';
 import '../screens/services_screen.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_widget.dart';
 import '../screens/Final_Screen.dart';
 import '../screens/pay_screen.dart';
 
-class Confirm_Screen extends StatefulWidget {
-  @override
-  _Confirm_ScreenState createState() => _Confirm_ScreenState();
-}
+class Confirm_Screen extends StatelessWidget {
+  final String wallet;
+  Confirm_Screen(this.wallet);
 
-class _Confirm_ScreenState extends State<Confirm_Screen> {
   void navToBack(BuildContext ctx) {
-    Navigator.of(ctx).pop();
-  }
-
-  void _chargeWallet(String txTitle, double txAmount, DateTime chosenDate) {
-    setState(() {
-      // change the wallet value
-    });
+    Navigator.of(ctx).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) {
+          return Services_Screen();
+        },
+      ),
+    );
   }
 
   void _startChargeWallet(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return ChargeWallet_Widget(_chargeWallet);
+          return ChargeWallet_Widget();
         },
       ),
     );
@@ -61,7 +59,7 @@ class _Confirm_ScreenState extends State<Confirm_Screen> {
                         height: 25,
                       ),
                       Text(
-                        "15 Points",
+                        wallet,
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,

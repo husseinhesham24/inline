@@ -2,30 +2,41 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../modules/user.dart';
+import '../screens/confirm_screen.dart';
 import '../screens/services_screen.dart';
 import 'package:http/http.dart' as http;
 
 import 'getProviders_api.dart';
 
-class LoginApi {
-  static Future<void> login(
-    String username,
-    String password,
-    String photo,
+class ChargeApi {
+  static Future<void> charge(
+    String cost,
+    String cardNumber,
+    String expMonth,
+    String expYear,
+    String cvc,
     BuildContext ctx,
   ) async {
+    Map<String, dynamic> jsondatais =
+        jsonDecode(UserSharedPreferences.getString('userData')!);
+    User userData = User.fromJson(jsondatais);
     final response = await http.post(
-      Uri.parse('https://inline.mrtechnawy.com/api/auth/login'),
+      Uri.parse('https://inline.mrtechnawy.com/api/stripe/final-pay'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer ${userData.token}',
       },
       body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
+        'cost': cost,
+        'card_number': cardNumber,
+        'exp_month': expMonth,
+        'exp_year': expYear,
+        'cvc': cvc,
       }),
     );
 
+    //print("lol wallet1");
     print(response.body);
 
     final data;
@@ -38,27 +49,29 @@ class LoginApi {
       data = jsonDecode(response.body);
     }
 
-    // print(data);
-    // print("lol");
-    // print(_data?['user']?['photo']);
+    //print("lol wallet2");
+    print(data);
+
+    
     if (data['status']) {
       Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
           builder: (_) {
             final userObject = new User(
-              data['user']['name'],
-              data['user']['email'],
-              data['user']['phone_number'],
-              "assets/images/unknown.png",
-              data['access_token'],
-              int.parse(data['user']['wallet']),
-              false,
-              false,
+              userData.name,
+              userData.email,
+              userData.phone,
+              userData.photo,
+              userData.token,
+              data['result']['wallet'],
+              userData.isGoogle,
+              userData.isFacebook,
             );
 
+            print("lol wallet");
             String UserData = jsonEncode(userObject);
             UserSharedPreferences.setString('userData', UserData);
-            return Services_Screen();
+            return Confirm_Screen(data['result']['wallet'].toString());
           },
         ),
       );

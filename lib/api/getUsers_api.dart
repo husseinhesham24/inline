@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../modules/user_shared_Preferences.dart';
+import '../screens/confirm_screen.dart';
 import '../screens/services_screen.dart';
 import '../screens/signing_screen.dart';
 import '../modules/user.dart';
@@ -12,6 +13,7 @@ import 'google_signin_api.dart';
 class GetUsersApi {
   static Future<void> checkUser(
     String endPoint,
+    bool iswallet,
     BuildContext ctx,
   ) async {
     Map<String, dynamic> jsondatais =
@@ -31,7 +33,7 @@ class GetUsersApi {
 
     final data;
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       data = jsonDecode(response.body);
@@ -40,13 +42,37 @@ class GetUsersApi {
     }
 
     if (data['status']) {
-      Navigator.of(ctx).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) {
-            return Services_Screen();
-          },
-        ),
-      );
+      if (!iswallet) {
+        Navigator.of(ctx).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) {
+              return Services_Screen();
+            },
+          ),
+        );
+      } else {
+        print("wallet 3yat");
+        final userObject = new User(
+          userData.name,
+          userData.email,
+          userData.phone,
+          userData.photo,
+          userData.token,
+          int.parse(data['user']['wallet']),
+          userData.isGoogle,
+          userData.isFacebook,
+        );
+
+        String UserData = jsonEncode(userObject);
+        UserSharedPreferences.setString('userData', UserData);
+        Navigator.of(ctx).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return Confirm_Screen(data['user']['wallet']);
+            },
+          ),
+        );
+      }
     } else {
       if (userData.isGoogle) {
         await GoogleSignInApi.logout();

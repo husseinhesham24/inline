@@ -19,11 +19,11 @@ class _Service_ScreenState extends State<Service_Screen> {
       Service.decode(UserSharedPreferences.getString('serviceData')!);
 
   void _navToPay(
-      BuildContext ctx, String waiting, String currentTurn, String cost) {
+      BuildContext ctx, String waiting, String currentTurn, String cost, int branch_id, int service_id) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Pay_Screen(waiting, currentTurn, cost);
+          return Pay_Screen(waiting, currentTurn, cost, branch_id, service_id);
         },
       ),
     );
@@ -95,7 +95,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                       itemBuilder: (context, i) {
                         dynamic item = _foundList[i];
                         String name = "", photo = "null";
-                        dynamic handler = (BuildContext ctx) {};
+                        dynamic handler = () {};
                         print("service loool");
                         print(item.name);
                         name = item.name;

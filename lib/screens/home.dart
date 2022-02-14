@@ -20,6 +20,7 @@ class MyHomePage extends StatelessWidget {
     if (response != null) {
       GetUsersApi.checkUser(
         "https://inline.mrtechnawy.com/api/auth/user-profile",
+        false,
         ctx,
       );
     } else {

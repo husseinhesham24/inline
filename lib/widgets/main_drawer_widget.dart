@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inline/screens/reservation_screen.dart';
+import '../api/getUsers_api.dart';
 import '../api/logout_api.dart';
 import '../modules/user.dart';
 import '../modules/user_shared_Preferences.dart';
@@ -18,16 +19,11 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
-  void navToConfirmPage(BuildContext ctx) async {
-    Map<String, dynamic> jsondatais =
-        jsonDecode(UserSharedPreferences.getString('userData')!);
-    User userData = User.fromJson(jsondatais);
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Confirm_Screen(userData.wallet.toString());
-        },
-      ),
+  void navToConfirmPage(BuildContext ctx) {
+    GetUsersApi.checkUser(
+      "https://inline.mrtechnawy.com/api/auth/user-profile",
+      true,
+      ctx,
     );
   }
 

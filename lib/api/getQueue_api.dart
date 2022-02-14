@@ -48,12 +48,14 @@ class GetQueueApi {
     }
 
     if (data['status']) {
-      
+      print("y5vbet el4lal");
       setData(
         ctx,
         data['result']['queue'],
         data['result']['current_turn'],
         cost,
+        branch_id,
+        service_id,
       );
     } else {
       final snackBar = SnackBar(

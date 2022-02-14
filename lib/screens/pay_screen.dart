@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inline/api/reserve_api.dart';
 import '../screens/Final_Screen.dart';
 import '../screens/services_screen.dart';
 import '../widgets/appBar_widget.dart';
@@ -8,14 +9,29 @@ import '../widgets/button_widget.dart';
 
 class Pay_Screen extends StatefulWidget {
   final String waiting, currentTurn, cost;
-  Pay_Screen(this.waiting, this.currentTurn, this.cost);
+  final int branches_id, services_id;
+  Pay_Screen(
+    this.waiting,
+    this.currentTurn,
+    this.cost,
+    this.branches_id,
+    this.services_id,
+  );
 
   @override
   State<Pay_Screen> createState() => _Pay_ScreenState();
 }
 
 class _Pay_ScreenState extends State<Pay_Screen> {
-  void navToBack(BuildContext ctx) {
+  void _reserve(BuildContext ctx) {
+    ReserveApi.Reserve(
+      widget.branches_id,
+      widget.services_id,
+      ctx,
+    );
+  }
+
+  void _navToBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
@@ -44,7 +60,7 @@ class _Pay_ScreenState extends State<Pay_Screen> {
                 SizedBox(
                   height: 150,
                 ),
-                Button_Widget("Confirm your reservation", () {}),
+                Button_Widget("Confirm your reservation", _reserve),
               ],
             ),
           ),
@@ -53,7 +69,7 @@ class _Pay_ScreenState extends State<Pay_Screen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
-                  onPressed: () => navToBack(context),
+                  onPressed: () => _navToBack(context),
                   icon: Icon(Icons.arrow_back_ios_sharp),
                 ),
               ],

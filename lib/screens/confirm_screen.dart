@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../screens/charge_wallet.dart';
 import '../screens/services_screen.dart';
+import '../widgets/appBar_widget.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_widget.dart';
 import '../screens/Final_Screen.dart';
 import '../screens/pay_screen.dart';
+import '../widgets/main_drawer_widget.dart';
 
 class Confirm_Screen extends StatelessWidget {
   final String wallet;
@@ -35,6 +37,8 @@ class Confirm_Screen extends StatelessWidget {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Scaffold(
+          drawer: MainDrawer(),
+          appBar: appBar_Widget((){}, true),
           body: Stack(
             children: [
               // Align(

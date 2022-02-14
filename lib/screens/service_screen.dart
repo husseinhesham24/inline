@@ -71,7 +71,7 @@ class _Service_ScreenState extends State<Service_Screen> {
     print(_foundList);
     return Scaffold(
       drawer: MainDrawer(),
-      appBar: appBar_Widget(_runFilter),
+      appBar: appBar_Widget(_runFilter, false),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

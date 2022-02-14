@@ -26,7 +26,6 @@ class _Services_ScreenState extends State<Services_Screen> {
     "clinics",
   ];
 
-
   List<dynamic> _foundList = [];
 
   void _navToProvider(BuildContext ctx) {
@@ -77,7 +76,7 @@ class _Services_ScreenState extends State<Services_Screen> {
       builder: (ctx, constraints) {
         return Scaffold(
           drawer: MainDrawer(),
-          appBar: appBar_Widget(_runFilter),
+          appBar: appBar_Widget(_runFilter, false),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

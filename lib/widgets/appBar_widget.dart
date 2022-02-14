@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
   final Function filter;
+  final bool pay;
 
-  appBar_Widget(this.filter);
+  appBar_Widget(this.filter, this.pay);
 
   @override
   Widget build(BuildContext context) {
@@ -34,29 +35,33 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
             Container(
               height: 40,
               width: 220,
-              child: TextField(
-                onChanged: (value) => filter(value),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff000000),
-                ),
-                decoration: InputDecoration(
-                  fillColor: Color(0xffEEEAEA),
-                  filled: true,
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.only(bottom: 10),
-                ),
-              ),
+              child: pay
+                  ? null
+                  : TextField(
+                      onChanged: (value) => filter(value),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff000000),
+                      ),
+                      decoration: InputDecoration(
+                        fillColor: Color(0xffEEEAEA),
+                        filled: true,
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.search),
+                        contentPadding: EdgeInsets.only(bottom: 10),
+                      ),
+                    ),
             ),
             SizedBox(
               width: 20,
             ),
-            Icon(
-              Icons.mic,
-              size: 35,
-            )
+            pay
+                ? Container()
+                : Icon(
+                    Icons.mic,
+                    size: 35,
+                  )
           ],
         ),
       ),

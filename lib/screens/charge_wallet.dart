@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:inline/api/charge_api.dart';
 
+import '../widgets/appBar_widget.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_widget.dart';
+import '../widgets/main_drawer_widget.dart';
 
 class ChargeWallet_Widget extends StatefulWidget {
   @override
@@ -40,9 +42,11 @@ class _ChargeWallet_WidgetState extends State<ChargeWallet_Widget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainDrawer(),
+      appBar: appBar_Widget((){}, true),
       body: SingleChildScrollView(
         //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        padding: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 20),
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),

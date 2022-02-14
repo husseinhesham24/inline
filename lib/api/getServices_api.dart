@@ -60,25 +60,20 @@ class GetServicesApi {
       final String encodedData = Service.encode(serviceList);
       UserSharedPreferences.setString('serviceData', encodedData);
 
-      setData();
+      setData(ctx);
       // providerList.forEach((element) {
       //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');
       // });
     } else {
-      if (userData.isGoogle) {
-        await GoogleSignInApi.logout();
-      }
-
-      if (userData.isFacebook) {
-        await FacebookAuth.instance.logOut();
-      }
-      Navigator.of(ctx).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return Signing_Screen();
-          },
+      final snackBar = SnackBar(
+        content: const Text('Sorry, there is something wrong :)'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {},
         ),
       );
+
+      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     }
   }
 }

@@ -6,25 +6,17 @@ import '../widgets/main_drawer_widget.dart';
 import '../widgets/paragraph_widget.dart';
 import '../widgets/button_widget.dart';
 
-class Pay_Screen extends StatelessWidget {
-  void navToFinalPage(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Final_Screen();
-        },
-      ),
-    );
-  }
+class Pay_Screen extends StatefulWidget {
+  final String waiting, currentTurn, cost;
+  Pay_Screen(this.waiting, this.currentTurn, this.cost);
 
+  @override
+  State<Pay_Screen> createState() => _Pay_ScreenState();
+}
+
+class _Pay_ScreenState extends State<Pay_Screen> {
   void navToBack(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Services_Screen();
-        },
-      ),
-    );
+    Navigator.of(ctx).pop();
   }
 
   @override
@@ -33,26 +25,26 @@ class Pay_Screen extends StatelessWidget {
       builder: (ctx, constraints) {
         return Scaffold(
           drawer: MainDrawer(),
-          appBar: appBar_Widget((){}, true),
+          appBar: appBar_Widget(() {}, true),
           body: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
                   height: 70,
                 ),
-                Paragraph_Widget("Your Services Costs: ", "5 Points"),
+                Paragraph_Widget("Your Service Cost: ", widget.cost),
                 SizedBox(
                   height: 30,
                 ),
-                Paragraph_Widget("Waiting queue: ", "4 people"),
+                Paragraph_Widget("Waiting queue: ", "${widget.waiting} people"),
                 SizedBox(
                   height: 30,
                 ),
-                Paragraph_Widget("Current Turn: ", "2"),
+                Paragraph_Widget("Current Turn: ", widget.currentTurn),
                 SizedBox(
                   height: 150,
                 ),
-                Button_Widget("Confirm your reservation", navToFinalPage),
+                Button_Widget("Confirm your reservation", () {}),
               ],
             ),
           ),
@@ -72,5 +64,3 @@ class Pay_Screen extends StatelessWidget {
     );
   }
 }
-
-

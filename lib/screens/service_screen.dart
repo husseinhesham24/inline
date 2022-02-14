@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inline/api/getQueue_api.dart';
 import 'package:inline/screens/pay_screen.dart';
 
 import '../modules/service.dart';
@@ -17,11 +18,12 @@ class _Service_ScreenState extends State<Service_Screen> {
   List<dynamic> _allList =
       Service.decode(UserSharedPreferences.getString('serviceData')!);
 
-  void _navToPay(BuildContext ctx) {
+  void _navToPay(
+      BuildContext ctx, String waiting, String currentTurn, String cost) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Pay_Screen();
+          return Pay_Screen(waiting, currentTurn, cost);
         },
       ),
     );
@@ -98,9 +100,17 @@ class _Service_ScreenState extends State<Service_Screen> {
                         print(item.name);
                         name = item.name;
                         photo = "null";
+
                         //but the user lan and lon
                         handler = () {
-                          _navToPay(context);
+                          GetQueueApi.getQueue(
+                            "https://inline.mrtechnawy.com/api/branch/current-turn",
+                            item.branches_id,
+                            item.services_id,
+                            item.cost,
+                            context,
+                            _navToPay,
+                          );
                         };
                         return ButtonList_Widget(name, photo, handler);
                       })

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:inline/screens/services_screen.dart';
 import '../modules/branch.dart';
+import '../modules/service.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../screens/signing_screen.dart';
 import '../modules/user.dart';
@@ -15,6 +16,7 @@ class GetQueueApi {
     String endPoint,
     int branch_id,
     int service_id,
+    String cost,
     BuildContext ctx,
     Function setData,
   ) async {
@@ -46,21 +48,13 @@ class GetQueueApi {
     }
 
     if (data['status']) {
-      List<Branch> branchList = [];
-      //print("loop ya beh");
-      data['branches'].forEach((entry) {
-        // print(
-        //     'id=${entry['id']}\nname=${entry['name']}\nimage=${entry['image']}');
-        branchList.add(Branch(id: entry['id'], name: entry['name']));
-      });
-
-      final String encodedData = Branch.encode(branchList);
-      UserSharedPreferences.setString('branchData', encodedData);
-
-      setData(ctx);
-      // providerList.forEach((element) {
-      //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');
-      // });
+      
+      setData(
+        ctx,
+        data['result']['queue'],
+        data['result']['current_turn'],
+        cost,
+      );
     } else {
       final snackBar = SnackBar(
         content: const Text('Sorry, there is something wrong :)'),

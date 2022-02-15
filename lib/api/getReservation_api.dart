@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:inline/modules/reservation.dart';
+import 'package:inline/screens/reservation_screen.dart';
 import 'package:inline/screens/services_screen.dart';
 import '../modules/branch.dart';
 import '../modules/user_shared_Preferences.dart';
@@ -10,22 +12,19 @@ import '../modules/user.dart';
 import 'package:http/http.dart' as http;
 import 'google_signin_api.dart';
 
-class GetBranchesApi {
-  static Future<void> getBranches(
-    int id,
+class GetReservationApi {
+  static Future<void> reservation(
     String endPoint,
-    double lat,
-    double lon,
     BuildContext ctx,
+    bool isnav,
     Function setData,
   ) async {
     Map<String, dynamic> jsondatais =
         jsonDecode(UserSharedPreferences.getString('userData')!);
     User userData = User.fromJson(jsondatais);
-    print("lon=${lon}\nlat=${lat}");
 
     final response = await http.get(
-      Uri.parse('${endPoint}?id=${id}&lat=${lat}&lon=${lon}'),
+      Uri.parse('${endPoint}'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -33,7 +32,7 @@ class GetBranchesApi {
       },
     );
 
-    print("branches list data");
+    print("reservation data");
     print(response.body);
 
     final data;
@@ -47,24 +46,37 @@ class GetBranchesApi {
     }
 
     if (data['status']) {
-      List<Branch> branchList = [];
+      List<Reservation> reservationList = [];
       //print("loop ya beh");
-      data['branches'].forEach((entry) {
+      data['result'].forEach((entry) {
         // print(
         //     'id=${entry['id']}\nname=${entry['name']}\nimage=${entry['image']}');
-        branchList.add(Branch(id: entry['id'], name: entry['name']));
+        reservationList.add(Reservation(
+          branch_name: entry['branch_name'],
+          service_name: entry['service_name'],
+          current_turn: entry['current_turn'],
+          queue: entry['queue'],
+          my_turn: entry['my_turn'],
+        ));
       });
 
-      final String encodedData = Branch.encode(branchList);
-      UserSharedPreferences.setString('branchData', encodedData);
+      final String encodedData = Reservation.encode(reservationList);
+      UserSharedPreferences.setString('reservationData', encodedData);
 
-      setData(ctx);
-      // providerList.forEach((element) {
-      //   print('id=${element.id}\nname=${element.name}\nimage=${element.photo}');
-      // });
+      if (isnav) {
+        Navigator.of(ctx).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return Reserve_Screen();
+            },
+          ),
+        );
+      } else {
+        setData(ctx);
+      }
     } else {
       final snackBar = SnackBar(
-        content: Text(data['message']),
+        content: const Text('Sorry, there is something wrong :)'),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {},

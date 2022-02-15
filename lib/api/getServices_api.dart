@@ -50,7 +50,7 @@ class GetServicesApi {
       data['services'].forEach((entry) {
         // print(
         //     'id=${entry['id']}\nname=${entry['name']}\nimage=${entry['image']}');
-        
+
         serviceList.add(Service(
           branches_id: int.parse(entry['pivot']['branches_id']),
           services_id: int.parse(entry['pivot']['services_id']),
@@ -68,7 +68,7 @@ class GetServicesApi {
       // });
     } else {
       final snackBar = SnackBar(
-        content: const Text('Sorry, there is something wrong :)'),
+        content: Text(data['message']),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {},

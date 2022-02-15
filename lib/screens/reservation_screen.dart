@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inline/modules/reservation.dart';
+import 'package:inline/widgets/card_widget.dart';
 
+import '../modules/user_shared_Preferences.dart';
 import '../widgets/appBar_widget.dart';
 import '../widgets/main_drawer_widget.dart';
 
@@ -9,54 +12,64 @@ class Reserve_Screen extends StatefulWidget {
 }
 
 class _Reserve_ScreenState extends State<Reserve_Screen> {
+  List<dynamic> _foundList =
+      Reservation.decode(UserSharedPreferences.getString('reservationData')!);
+
+  void _refresh(BuildContext ctx) {}
+
+  void _navToBack(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MainDrawer(),
       appBar: appBar_Widget(() {}, true),
-      body: SingleChildScrollView(
-        child: Card(
-          elevation: 5,
-          margin: EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 5,
-          ),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              child: Padding(
-                padding: EdgeInsets.all(6),
-                child: FittedBox(
-                  child: Text("5"),
-                ),
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 10,
             ),
-            title: Text(
-              "Credit Agricole Bank",
-              // ignore: deprecated_member_use
-              style: Theme.of(context).textTheme.headline6,
+
+            Expanded(
+              child: _foundList.length > 0
+                  ? ListView.builder(
+                      itemCount: _foundList.length,
+                      itemBuilder: (context, i) {
+                        dynamic item = _foundList[i];
+
+                        return Container(
+                          height: 100,
+                          child: Card_Widget(
+                            item.branch_name,
+                            item.service_name,
+                            item.current_turn,
+                            item.queue,
+                            item.my_turn,
+                          ),
+                        );
+                      })
+                  : Text(
+                      'No results found',
+                      style: TextStyle(fontSize: 24),
+                    ),
             ),
-            subtitle: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Deposit"),
-              ],
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: () => _navToBack(context),
+              icon: Icon(Icons.arrow_back_ios_sharp),
             ),
-            // ignore: deprecated_member_use
-            trailing: Column(
-              children: [
-                Text("waiting queue: 6"),
-                SizedBox(
-                  height: 21,
-                ),
-                Text("current Turn: 6"),
-              ],
-            ),
-            // ignore: deprecated_member_use
-          ),
+          ],
         ),
       ),
     );

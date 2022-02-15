@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inline/api/getReservation_api.dart';
+import 'package:inline/api/reserve_api.dart';
 import 'package:inline/screens/reservation_screen.dart';
 import '../api/getUsers_api.dart';
 import '../api/logout_api.dart';
@@ -27,16 +29,13 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
+
   void navToReservePage(BuildContext ctx) async {
-    // Map<String, dynamic> jsondatais =
-    //     jsonDecode(UserSharedPreferences.getString('userData')!);
-    // User userData = User.fromJson(jsondatais);
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Reserve_Screen();
-        },
-      ),
+    GetReservationApi.reservation(
+      "https://inline.mrtechnawy.com/api/reservation/mine",
+      ctx,
+      true,
+      () {},
     );
   }
 

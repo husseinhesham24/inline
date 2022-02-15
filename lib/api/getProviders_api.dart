@@ -62,7 +62,7 @@ class GetprovidersApi {
       // });
     } else {
       final snackBar = SnackBar(
-        content: const Text('Sorry, there is something wrong :)'),
+        content: Text(data['message']),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {},

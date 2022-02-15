@@ -109,6 +109,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                             item.services_id,
                             item.cost,
                             context,
+                            false,
                             _navToPay,
                           );
                         };

@@ -53,11 +53,19 @@ class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
             ),
-            SizedBox(
-              width: 20,
-            ),
             pay
                 ? Container()
+                : SizedBox(
+                    width: 20,
+                  ),
+            pay
+                ? IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      size: 30,
+                    ),
+                    onPressed: () => filter(context),
+                  )
                 : Icon(
                     Icons.mic,
                     size: 35,

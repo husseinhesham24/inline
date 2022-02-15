@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inline/modules/reservation.dart';
 import 'package:inline/widgets/card_widget.dart';
 
+import '../api/getReservation_api.dart';
 import '../modules/user_shared_Preferences.dart';
 import '../widgets/appBar_widget.dart';
 import '../widgets/main_drawer_widget.dart';
@@ -15,7 +16,21 @@ class _Reserve_ScreenState extends State<Reserve_Screen> {
   List<dynamic> _foundList =
       Reservation.decode(UserSharedPreferences.getString('reservationData')!);
 
-  void _refresh(BuildContext ctx) {}
+  void _updateList(BuildContext ctx) {
+    GetReservationApi.reservation(
+      "https://inline.mrtechnawy.com/api/reservation/mine",
+      ctx,
+      false,
+      _refresh,
+    );
+  }
+
+  void _refresh() {
+    setState(() {
+      _foundList = Reservation.decode(
+          UserSharedPreferences.getString('reservationData')!);
+    });
+  }
 
   void _navToBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -25,7 +40,7 @@ class _Reserve_ScreenState extends State<Reserve_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MainDrawer(),
-      appBar: appBar_Widget(() {}, true),
+      appBar: appBar_Widget(_updateList, true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +49,6 @@ class _Reserve_ScreenState extends State<Reserve_Screen> {
             SizedBox(
               height: 10,
             ),
-
             Expanded(
               child: _foundList.length > 0
                   ? ListView.builder(

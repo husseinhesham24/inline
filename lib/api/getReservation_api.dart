@@ -72,7 +72,7 @@ class GetReservationApi {
           ),
         );
       } else {
-        setData(ctx);
+        setData();
       }
     } else {
       final snackBar = SnackBar(

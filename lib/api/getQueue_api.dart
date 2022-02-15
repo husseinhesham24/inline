@@ -18,6 +18,7 @@ class GetQueueApi {
     int service_id,
     String cost,
     BuildContext ctx,
+    bool isnav,
     Function setData,
   ) async {
     Map<String, dynamic> jsondatais =
@@ -49,14 +50,24 @@ class GetQueueApi {
 
     if (data['status']) {
       print("y5vbet el4lal");
-      setData(
-        ctx,
-        data['result']['queue'],
-        data['result']['current_turn'],
-        cost,
-        branch_id,
-        service_id,
-      );
+      if (!isnav) {
+        print("y5vbet el4laloooo");
+        setData(
+          ctx,
+          data['result']['queue'],
+          data['result']['current_turn'],
+          cost,
+          branch_id,
+          service_id,
+        );
+      } else {
+        print("y5vbet el4lalxxxxx");
+        setData(
+          cost,
+          data['result']['queue'],
+          data['result']['current_turn'],
+        );
+      }
     } else {
       final snackBar = SnackBar(
         content: const Text('Sorry, there is something wrong :)'),

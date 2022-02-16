@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class appBar_Widget extends StatelessWidget implements PreferredSizeWidget {
   final Function filter;
   final bool pay;
-
+  
   appBar_Widget(this.filter, this.pay);
 
   @override
